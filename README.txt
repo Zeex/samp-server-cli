@@ -16,40 +16,41 @@ usage: samp-server-cli.py [-h] [-announce {0,1}] [-bind address]
 
 optional arguments:
   -h, --help            show this help message and exit
-  -announce {0,1}       Toggle announcement
-  -bind address         Bind to specific IP address
+  -announce {0,1}       toggle announcement to masterlist
+  -bind address         bind to specific IP address
   -filterscripts [path [path ...]]
-                        List of filter scripts to be loaded
-  -gamemode0 path       Main game mode
-  -gamemode1 path       Game mode #1
-  -gamemode2 path       Game mode #2
-  -gamemode3 path       Game mode #3
-  -gamemode4 path       Game mode #4
-  -gamemode5 path       Game mode #5
-  -gamemode6 path       Game mode #6
-  -gamemode7 path       Game mode #7
-  -gamemode8 path       Game mode #8
-  -gamemode9 path       Game mode #9
+                        list of filter scripts to be loaded
+  -gamemode0 path       main game mode
+  -gamemode1 path       game mode #1
+  -gamemode2 path       game mode #2
+  -gamemode3 path       game mode #3
+  -gamemode4 path       game mode #4
+  -gamemode5 path       game mode #5
+  -gamemode6 path       game mode #6
+  -gamemode7 path       game mode #7
+  -gamemode8 path       game mode #8
+  -gamemode9 path       game mode #9
   -gamemodetext "My Game Mode"
-                        Game mode text (shown in server browser)
+                        game mode text (shown in server browser)
   -hostname "My SA-MP server"
-                        Host name (shown in server browser)
-  -lanmode {0,1}        Toggle LAN mode
+                        host name (shown in server browser)
+  -lanmode {0,1}        toggle LAN mode
   -logtimeformat format
-                        Format of time stamps in log
-  -mapname name         Map name (shown in server browser)
-  -maxplayers number    Max. number of players
-  -maxnpc number        Max. number of NPCs (bots)
-  -output {0,1}         Toggle console output
-  -password password    Server password
-  -serverdir path       Path to server root
+                        format of time stamps in log
+  -mapname name         map name (shown in server browser)
+  -maxplayers number    max. number of players
+  -maxnpc number        max. number of NPCs (bots)
+  -output {0,1}         toggle console output
+  -password password    server password
+  -serverdir path       server executable directory (current directory by
+                        default)
   -plugins [path [path ...]]
-                        List of plugins to be loaded
-  -port number          Server port
+                        list of plugins to be loaded
+  -port number          server port
   -query {0,1}
-  -rcon {0,1}           Toggle RCON (Remote CONsole)
+  -rcon {0,1}           toggle RCON (Remote CONsole)
   -rcon_password password
                         RCON password
-  -timestamp {0,1}      Show time stamps in log
-  -weburl url           Website URL
-  -workingdir path      Working directory
+  -timestamp {0,1}      show time stamps in log
+  -weburl url           website URL
+  -workingdir path      set working directory (current directory by default)
