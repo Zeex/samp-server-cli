@@ -99,7 +99,10 @@ def run(options):
 			values = [values]
 		if values is not None:
 			for i, v in enumerate(values):
-				values[i] = os.path.relpath(v, dir)
+				if v.startswith('@'):
+					values[i] = v[1:]
+				else:
+					values[i] = os.path.relpath(v, dir)
 			options[name] = '%s' % ' '.join(values)
 
 	server_dir = os.path.abspath(options['serverdir'])
