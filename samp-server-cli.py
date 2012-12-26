@@ -39,7 +39,7 @@ def get_arguments(args):
 
   parser.add_argument('-a', '-announce', dest='announce', action='store_const', const=1, default=0, help='toggle announcement to masterlist')
   parser.add_argument('-b', '-bind', dest='bind', metavar='address', help='bind to specific IP address')
-  parser.add_argument('-chatlogging', action='store_const', const=1, default=1, help='toggle chat logging')
+  parser.add_argument('-c', '-chatlogging', dest='chatlogging', action='store_const', const=1, default=0, help='toggle chat logging')
   parser.add_argument('-f', '-filterscripts', dest='filterscripts', metavar='path', nargs='*', help='list of filter scripts to be loaded')
   parser.add_argument('-g', '-g0', '-gamemode', '-gamemode0', dest='gamemode0', metavar='path', required=True, help='main game mode')
   for i in range(1, 10):

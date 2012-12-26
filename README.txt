@@ -1,7 +1,7 @@
-usage: samp-server-cli.py [-h] [-a] [-b address] [-chatlogging]
-                          [-f [path [path ...]]] -g path [-g1 path] [-g2 path]
-                          [-g3 path] [-g4 path] [-g5 path] [-g6 path]
-                          [-g7 path] [-g8 path] [-g9 path] [-x "My Game Mode"]
+usage: samp-server-cli.py [-h] [-a] [-b address] [-c] [-f [path [path ...]]]
+                          -g path [-g1 path] [-g2 path] [-g3 path] [-g4 path]
+                          [-g5 path] [-g6 path] [-g7 path] [-g8 path]
+                          [-g9 path] [-x "My Game Mode"]
                           [-n "My SA-MP server"] [-l] [-logqueries]
                           [-logtimeformat format] [-m name]
                           [-maxplayers number] [-maxnpc number] [-o]
@@ -14,7 +14,7 @@ optional arguments:
   -a, -announce         toggle announcement to masterlist
   -b address, -bind address
                         bind to specific IP address
-  -chatlogging          toggle chat logging
+  -c, -chatlogging      toggle chat logging
   -f [path [path ...]], -filterscripts [path [path ...]]
                         list of filter scripts to be loaded
   -g path, -g0 path, -gamemode path, -gamemode0 path
@@ -62,7 +62,7 @@ optional arguments:
   -q, -query
   -r, -rcon             toggle RCON (Remote CONsole)
   -R password, -rconpassword password
-                        RCON password
+                        RCON admin password
   -t, -timestamp        show time stamps in log
   -u url, -weburl url   website URL
   -w path, -workingdir path
