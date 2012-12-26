@@ -47,6 +47,7 @@ def get_arguments(args):
 	parser.add_argument('-gamemodetext', metavar='"My Game Mode"', help='game mode text (shown in server browser)')
 	parser.add_argument('-hostname', metavar='"My SA-MP server"', help='host name (shown in server browser)')
 	parser.add_argument('-lanmode', type=int, choices=[0, 1], default=0, help='toggle LAN mode')
+	parser.add_argument('-logqueries', type=int, choices=[0, 1], default=0, help='toggle logging of queries sent by players')
 	parser.add_argument('-logtimeformat', metavar='format', help='format of time stamps in log')
 	parser.add_argument('-mapname', metavar='name', help='map name (shown in server browser)')
 	parser.add_argument('-maxplayers', metavar='number', type=int, default=1, help='max. number of players')

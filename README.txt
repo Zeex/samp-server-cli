@@ -7,11 +7,12 @@ usage: samp-server-cli.py [-h] [-announce {0,1}] [-bind address]
                           [-gamemode7 path] [-gamemode8 path]
                           [-gamemode9 path] [-gamemodetext "My Game Mode"]
                           [-hostname "My SA-MP server"] [-lanmode {0,1}]
-                          [-logtimeformat format] [-mapname name]
-                          [-maxplayers number] [-maxnpc number]
-                          [-output {0,1}] [-password password]
-                          [-serverdir path] [-plugins [path [path ...]]]
-                          [-port number] [-query {0,1}] [-rcon {0,1}]
+                          [-logqueries {0,1}] [-logtimeformat format]
+                          [-mapname name] [-maxplayers number]
+                          [-maxnpc number] [-output {0,1}]
+                          [-password password] [-serverdir path]
+                          [-plugins [path [path ...]]] [-port number]
+                          [-query {0,1}] [-rcon {0,1}]
                           [-rconpassword password] [-timestamp {0,1}]
                           [-weburl url] [-workingdir path]
 
@@ -37,6 +38,7 @@ optional arguments:
   -hostname "My SA-MP server"
                         host name (shown in server browser)
   -lanmode {0,1}        toggle LAN mode
+  -logqueries {0,1}     toggle logging of queries sent by players
   -logtimeformat format
                         format of time stamps in log
   -mapname name         map name (shown in server browser)
