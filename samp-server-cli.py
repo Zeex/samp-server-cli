@@ -50,7 +50,7 @@ def get_arguments(args):
   parser.add_argument('-logqueries', action='store_const', const=1, default=0, help='toggle logging of queries sent by players')
   parser.add_argument('-logtimeformat', metavar='format', help='format of time stamps in log')
   parser.add_argument('-m', '-mapname', dest='mapname', metavar='name', help='map name (shown in server browser)')
-  parser.add_argument('-maxplayers', metavar='number', type=int, default=1, help='max. number of players')
+  parser.add_argument('-maxplayers', metavar='number', type=int, default=500, help='max. number of players')
   parser.add_argument('-maxnpc', metavar='number', type=int, default=0, help='max. number of NPCs (bots)')
   parser.add_argument('-o', '-output', dest='output', action='store_const', const=1, default=0, help='toggle console output')
   parser.add_argument('-P', '-password', dest='password', metavar='password', help='server password')
