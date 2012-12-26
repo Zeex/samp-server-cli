@@ -16,9 +16,10 @@ optional arguments:
                         bind to specific IP address
   -c, -chatlogging      toggle chat logging
   -f [path [path ...]], -filterscripts [path [path ...]]
-                        list of filter scripts to be loaded
+                        list of filter scripts to be loaded (full or relative
+                        paths or just @names
   -g path, -g0 path, -gamemode path, -gamemode0 path
-                        main game mode
+                        main game mode (full or relative path or just @name)
   -g1 path, -gamemode1 path
                         game mode #1
   -g2 path, -gamemode2 path
@@ -56,7 +57,8 @@ optional arguments:
                         server executable directory (current directory by
                         default)
   -plugins [path [path ...]]
-                        list of plugins to be loaded
+                        list of plugins to be loaded (full or relative paths
+                        or just @names)
   -p number, -port number
                         server port
   -q, -query
