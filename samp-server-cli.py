@@ -119,7 +119,10 @@ def run(options):
   mkdir(os.path.join(working_dir, 'filterscripts'))
 
   os.chdir(working_dir)
-  subprocess.call(server_path)
+  try:
+    subprocess.call(server_path)
+  except KeyboardInterrupt:
+    pass
 
 if __name__ == '__main__':
   run(get_options())
