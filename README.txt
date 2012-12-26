@@ -1,15 +1,13 @@
 usage: samp-server-cli.py [-h] [-a] [-b address] [-chatlogging]
                           [-f [path [path ...]]] -g path [-g1 path] [-g2 path]
                           [-g3 path] [-g4 path] [-g5 path] [-g6 path]
-                          [-g7 path] [-g8 path] [-g9 path]
-                          [-gamemodetext "My Game Mode"]
+                          [-g7 path] [-g8 path] [-g9 path] [-x "My Game Mode"]
                           [-n "My SA-MP server"] [-l] [-logqueries]
-                          [-logtimeformat format] [-mapname name]
+                          [-logtimeformat format] [-m name]
                           [-maxplayers number] [-maxnpc number] [-o]
-                          [-password password] [-s path]
-                          [-plugins [path [path ...]]] [-p number] [-query]
-                          [-rcon] [-rconpassword password] [-timestamp]
-                          [-weburl url] [-w path]
+                          [-P password] [-s path] [-plugins [path [path ...]]]
+                          [-p number] [-q] [-r] [-R password] [-t] [-u url]
+                          [-w path]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -39,7 +37,7 @@ optional arguments:
                         game mode #8
   -g9 path, -gamemode9 path
                         game mode #9
-  -gamemodetext "My Game Mode"
+  -x "My Game Mode", -gamemodetext "My Game Mode"
                         game mode text (shown in server browser)
   -n "My SA-MP server", -hostname "My SA-MP server"
                         host name (shown in server browser)
@@ -47,11 +45,13 @@ optional arguments:
   -logqueries           toggle logging of queries sent by players
   -logtimeformat format
                         format of time stamps in log
-  -mapname name         map name (shown in server browser)
+  -m name, -mapname name
+                        map name (shown in server browser)
   -maxplayers number    max. number of players
   -maxnpc number        max. number of NPCs (bots)
   -o, -output           toggle console output
-  -password password    server password
+  -P password, -password password
+                        server password
   -s path, -serverdir path
                         server executable directory (current directory by
                         default)
@@ -59,11 +59,11 @@ optional arguments:
                         list of plugins to be loaded
   -p number, -port number
                         server port
-  -query
-  -rcon                 toggle RCON (Remote CONsole)
-  -rconpassword password
+  -q, -query
+  -r, -rcon             toggle RCON (Remote CONsole)
+  -R password, -rconpassword password
                         RCON password
-  -timestamp            show time stamps in log
-  -weburl url           website URL
+  -t, -timestamp        show time stamps in log
+  -u url, -weburl url   website URL
   -w path, -workingdir path
                         set working directory (current directory by default)
