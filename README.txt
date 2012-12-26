@@ -1,24 +1,22 @@
-usage: samp-server-cli.py [-h] [-a {0,1}] [-b address] [-chatlogging {0,1}]
+usage: samp-server-cli.py [-h] [-a] [-b address] [-chatlogging]
                           [-f [path [path ...]]] -g path [-g1 path] [-g2 path]
                           [-g3 path] [-g4 path] [-g5 path] [-g6 path]
                           [-g7 path] [-g8 path] [-g9 path]
                           [-gamemodetext "My Game Mode"]
-                          [-n "My SA-MP server"] [-l {0,1}]
-                          [-logqueries {0,1}] [-logtimeformat format]
-                          [-mapname name] [-maxplayers number]
-                          [-maxnpc number] [-o {0,1}] [-password password]
-                          [-s path] [-plugins [path [path ...]]] [-p number]
-                          [-query {0,1}] [-rcon {0,1}]
-                          [-rconpassword password] [-timestamp {0,1}]
+                          [-n "My SA-MP server"] [-l] [-logqueries]
+                          [-logtimeformat format] [-mapname name]
+                          [-maxplayers number] [-maxnpc number] [-o]
+                          [-password password] [-s path]
+                          [-plugins [path [path ...]]] [-p number] [-query]
+                          [-rcon] [-rconpassword password] [-timestamp]
                           [-weburl url] [-w path]
 
 optional arguments:
   -h, --help            show this help message and exit
-  -a {0,1}, -announce {0,1}
-                        toggle announcement to masterlist
+  -a, -announce         toggle announcement to masterlist
   -b address, -bind address
                         bind to specific IP address
-  -chatlogging {0,1}    toggle chat logging
+  -chatlogging          toggle chat logging
   -f [path [path ...]], -filterscripts [path [path ...]]
                         list of filter scripts to be loaded
   -g path, -g0 path, -gamemode path, -gamemode0 path
@@ -45,16 +43,14 @@ optional arguments:
                         game mode text (shown in server browser)
   -n "My SA-MP server", -hostname "My SA-MP server"
                         host name (shown in server browser)
-  -l {0,1}, -lanmode {0,1}
-                        toggle LAN mode
-  -logqueries {0,1}     toggle logging of queries sent by players
+  -l, -lanmode          toggle LAN mode
+  -logqueries           toggle logging of queries sent by players
   -logtimeformat format
                         format of time stamps in log
   -mapname name         map name (shown in server browser)
   -maxplayers number    max. number of players
   -maxnpc number        max. number of NPCs (bots)
-  -o {0,1}, -output {0,1}
-                        toggle console output
+  -o, -output           toggle console output
   -password password    server password
   -s path, -serverdir path
                         server executable directory (current directory by
@@ -63,11 +59,11 @@ optional arguments:
                         list of plugins to be loaded
   -p number, -port number
                         server port
-  -query {0,1}
-  -rcon {0,1}           toggle RCON (Remote CONsole)
+  -query
+  -rcon                 toggle RCON (Remote CONsole)
   -rconpassword password
                         RCON password
-  -timestamp {0,1}      show time stamps in log
+  -timestamp            show time stamps in log
   -weburl url           website URL
   -w path, -workingdir path
                         set working directory (current directory by default)
