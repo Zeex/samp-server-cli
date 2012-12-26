@@ -39,6 +39,7 @@ def get_arguments(args):
 
 	parser.add_argument('-announce', type=int, choices=[0, 1], default=0, help='toggle announcement to masterlist')
 	parser.add_argument('-bind', metavar='address', help='bind to specific IP address')
+	parser.add_argument('-chatlogging', type=int, choices=[0, 1], default=1, help='toggle chat logging')
 	parser.add_argument('-filterscripts', metavar='path', nargs='*', help='list of filter scripts to be loaded')
 	parser.add_argument('-gamemode0', metavar='path', required=True, help='main game mode')
 	for i in range(1, 10):

@@ -1,4 +1,5 @@
 usage: samp-server-cli.py [-h] [-announce {0,1}] [-bind address]
+                          [-chatlogging {0,1}]
                           [-filterscripts [path [path ...]]] -gamemode0 path
                           [-gamemode1 path] [-gamemode2 path]
                           [-gamemode3 path] [-gamemode4 path]
@@ -18,6 +19,7 @@ optional arguments:
   -h, --help            show this help message and exit
   -announce {0,1}       toggle announcement to masterlist
   -bind address         bind to specific IP address
+  -chatlogging {0,1}    toggle chat logging
   -filterscripts [path [path ...]]
                         list of filter scripts to be loaded
   -gamemode0 path       main game mode
