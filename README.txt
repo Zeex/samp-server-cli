@@ -11,7 +11,7 @@ usage: samp-server-cli.py [-h] [-announce {0,1}] [-bind address]
                           [-output {0,1}] [-password password]
                           [-serverdir path] [-plugins [path [path ...]]]
                           [-port number] [-query {0,1}] [-rcon {0,1}]
-                          [-rcon_password password] [-timestamp {0,1}]
+                          [-rconpassword password] [-timestamp {0,1}]
                           [-weburl url] [-workingdir path]
 
 optional arguments:
@@ -49,7 +49,7 @@ optional arguments:
   -port number          server port
   -query {0,1}
   -rcon {0,1}           toggle RCON (Remote CONsole)
-  -rcon_password password
+  -rconpassword password
                         RCON password
   -timestamp {0,1}      show time stamps in log
   -weburl url           website URL

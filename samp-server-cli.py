@@ -57,7 +57,7 @@ def get_arguments(args):
 	parser.add_argument('-port', metavar='number', type=int, default=7777, help='server port')
 	parser.add_argument('-query', type=int, choices=[0, 1], default=0)
 	parser.add_argument('-rcon', type=int, choices=[0, 1], default=0, help='toggle RCON (Remote CONsole)')
-	parser.add_argument('-rcon_password', metavar='password', default=generate_password(), help='RCON password')
+	parser.add_argument('-rconpassword', metavar='password', default=generate_password(), help='RCON password')
 	parser.add_argument('-timestamp', type=int, choices=[0, 1], default=1, help='show time stamps in log')
 	parser.add_argument('-weburl', metavar='url', help='website URL')
 	parser.add_argument('-workingdir', metavar='path', default='.', help='set working directory (current directory by default)')
