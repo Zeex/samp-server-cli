@@ -34,7 +34,7 @@ import sys
 def generate_password(size=10, chars=string.ascii_letters + string.digits):
   return ''.join(random.choice(chars) for x in range(size))
 
-def get_arguments(args):
+def get_options(args):
   parser = argparse.ArgumentParser()
 
   parser.add_argument('-a', '-announce', dest='announce', action='store_const', const=1, default=0, help='toggle announcement to masterlist')
@@ -122,4 +122,4 @@ def run(options):
   subprocess.call(server_path)
 
 if __name__ == '__main__':
-  run(get_arguments(sys.argv[1:]))
+  run(get_options(sys.argv[1:]))
