@@ -54,7 +54,7 @@ def get_arguments(args):
   parser.add_argument('-maxnpc', metavar='number', type=int, default=0, help='max. number of NPCs (bots)')
   parser.add_argument('-o', '-output', dest='output', action='store_const', const=1, default=0, help='toggle console output')
   parser.add_argument('-P', '-password', dest='password', metavar='password', help='server password')
-  parser.add_argument('-s', '-serverdir', dest='serverdir', metavar='path', default='', help='server executable directory (current directory by default)')
+  parser.add_argument('-s', '-serverdir', dest='!serverdir', metavar='path', default='', help='server executable directory (current directory by default)')
   parser.add_argument('-plugins', metavar='path', nargs='*', help='list of plugins to be loaded')
   parser.add_argument('-p', '-port', dest='port', metavar='number', type=int, default=7777, help='server port')
   parser.add_argument('-q', '-query', dest='query', action='store_const', const=1, default=0)
@@ -62,7 +62,7 @@ def get_arguments(args):
   parser.add_argument('-R', '-rconpassword', dest='rcon_password', metavar='password', default=generate_password(), help='RCON admin password')
   parser.add_argument('-t', '-timestamp', dest='timestamp', action='store_const', const=1, default=0, help='show time stamps in log')
   parser.add_argument('-u', '-weburl', dest='weburl', metavar='url', help='website URL')
-  parser.add_argument('-w', '-workingdir', dest='workingdir', metavar='path', default='.', help='set working directory (current directory by default)')
+  parser.add_argument('-w', '-workingdir', dest='!workingdir', metavar='path', default='.', help='set working directory (current directory by default)')
 
   args = parser.parse_args(args)
   return vars(args)
@@ -70,6 +70,8 @@ def get_arguments(args):
 def write_config(filename, options):
   file = open(filename, 'w')
   for name, value in options.items():
+    if name.startswith('!'):
+      continue
     if value is not None:
       file.write('%s %s\n' % (name, value))
   file.close()
@@ -79,7 +81,7 @@ def mkdir(path):
     os.mkdir(path)
 
 def run(options):
-  working_dir = options['workingdir']
+  working_dir = options['!workingdir']
   if not os.path.exists(working_dir):
     os.mkdir(working_dir)
 
@@ -104,7 +106,7 @@ def run(options):
           values[i] = os.path.relpath(v, dir)
       options[name] = '%s' % ' '.join(values)
 
-  server_dir = os.path.abspath(options['serverdir'])
+  server_dir = os.path.abspath(options['!serverdir'])
   if os.name == 'nt':
     server_exe = 'samp-server.exe'
   else:
