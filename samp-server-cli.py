@@ -93,43 +93,19 @@ def write_config(filename, options):
       file.write('%s %s\n' % (name, value))
   file.close()
 
-def mkdir(path):
-  if not os.path.exists(path):
-    os.mkdir(path)
-
 def group(n, iterable, padvalue=None):
     "group(3, 'abcdefg', 'x') --> ('a','b','c'), ('d','e','f'), ('g','x','x')"
     return itertools.izip_longest(*[iter(iterable)]*n, fillvalue=padvalue)
+
+def quiet_mkdir(path):
+  if not os.path.exists(path):
+    os.mkdir(path)
 
 def run(options):
   working_dir = options['workingdir']
   if not os.path.exists(working_dir):
     os.mkdir(working_dir)
   del options['workingdir']
-
-  dirs = { 'filterscripts': 'filterscripts',
-           'plugins':       'plugins',
-         }
-  for i in range(0, 10):
-    dirs['gamemode%d' % i] = 'gamemodes'
-
-  for name, dir in dirs.items():
-    dir = os.path.join(working_dir, dir)
-    values = options[name]
-    if values is None:
-      continue
-    if not type(values) is list:
-      values = [values]
-    if values is not None:
-      for i, v in enumerate(values):
-        if not os.path.isabs(v) and not v.startswith('.'):
-          # If this is a relative path that does not start with a '.' leave it
-          # as is. This is how you typically write script names in server.cfg.
-          continue
-        else:
-          # Otherwise make it relative to the corresponding directory.
-          values[i] = os.path.relpath(v, dir)
-      options[name] = '%s' % ' '.join(values)
 
   server_dir = options['serverdir']
   if server_dir is None:
@@ -161,10 +137,34 @@ def run(options):
     options.update(config_options)
   del options['config']
 
+  dirs = { 'filterscripts': 'filterscripts',
+           'plugins':       'plugins',
+         }
+  for i in range(0, 10):
+    dirs['gamemode%d' % i] = 'gamemodes'
+
+  for name, dir in dirs.items():
+    dir = os.path.join(working_dir, dir)
+    values = options[name]
+    if values is None:
+      continue
+    if not type(values) is list:
+      values = [values]
+    if values is not None:
+      for i, v in enumerate(values):
+        if not os.path.isabs(v) and not v.startswith('.'):
+          # If this is a relative path that does not start with a '.' leave it
+          # as is. This is how you typically write script names in server.cfg.
+          continue
+        else:
+          # Otherwise make it relative to the corresponding directory.
+          values[i] = os.path.relpath(v, dir)
+      options[name] = '%s' % ' '.join(values)
+
   write_config(os.path.join(working_dir, 'server.cfg'), options)
 
-  mkdir(os.path.join(working_dir, 'gamemodes'))
-  mkdir(os.path.join(working_dir, 'filterscripts'))
+  quiet_mkdir(os.path.join(working_dir, 'gamemodes'))
+  quiet_mkdir(os.path.join(working_dir, 'filterscripts'))
 
   os.chdir(working_dir)
   try:
