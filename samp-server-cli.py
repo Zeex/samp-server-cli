@@ -36,7 +36,7 @@ def generate_password(size=10, chars=string.ascii_letters + string.digits):
   return ''.join(random.choice(chars) for x in range(size))
 
 def get_options():
-  parser = argparse.ArgumentParser()
+  parser = argparse.ArgumentParser(description='A command line interface to SA:MP server')
 
   parser.add_argument('-a', '--announce', dest='announce', action='store_const', const=1, default=0, help='toggle announcement to masterlist')
   parser.add_argument('-b', '--bind', dest='bind', metavar='address', help='bind to specific IP address')

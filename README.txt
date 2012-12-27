@@ -9,6 +9,8 @@ usage: samp-server-cli.py [-h] [-a] [-b address] [-C] [-c cmd [args ...]]
                           [-P [password]] [-s path] [-d path] [-p number] [-q]
                           [-r] [-R password] [-T] [-u url] [-w path]
 
+A command line interface to SA:MP server
+
 optional arguments:
   -h, --help            show this help message and exit
   -a, --announce        toggle announcement to masterlist
