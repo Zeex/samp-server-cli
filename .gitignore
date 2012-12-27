@@ -1,6 +1,7 @@
 *.swp
 
-server.cfg
-server_log.txt
 gamemodes
 filterscripts
+plugins
+server.cfg
+server_log.txt
