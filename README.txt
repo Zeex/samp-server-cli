@@ -61,7 +61,8 @@ optional arguments:
                         or just @names)
   -p number, -port number
                         server port
-  -q, -query
+  -q, -query            allow querying server info from outside world (e.g.
+                        server browser)
   -r, -rcon             toggle RCON (Remote CONsole)
   -R password, -rconpassword password
                         RCON admin password
