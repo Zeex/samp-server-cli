@@ -27,6 +27,7 @@
 import argparse
 import itertools
 import os
+import platform
 import random
 import string
 import subprocess
@@ -78,6 +79,14 @@ def quiet_mkdir(path):
   if not os.path.exists(path):
     os.mkdir(path)
 
+def is_windows():
+  system = platform.system()
+  return system == 'Windows' or system.startswith('CYGWIN_NT')
+
+def is_linux():
+  system = platform.system()
+  return system == 'Linux'
+
 def read_config(filename):
   options = {}
   file = open(filename, 'r')
@@ -117,7 +126,7 @@ def run(options):
 
   command = options['command']
   if command is None:
-    if os.name == 'nt':
+    if is_windows():
       server_exe = 'samp-server.exe'
     else:
       server_exe = 'samp03svr'
@@ -139,7 +148,7 @@ def run(options):
   plugins = options['plugins'] 
   print 'plugins:', plugins
   if plugins is not None:
-    if os.name == 'nt':
+    if is_windows():
       ext = '.dll'
     else:
       ext = '.so'
