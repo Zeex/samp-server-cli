@@ -58,7 +58,7 @@ def get_options():
   parser.add_argument('-o', '--output', dest='output', action='store_const', const=1, default=0, help='toggle console output')
   parser.add_argument('-P', '--password', dest='password', metavar='password', nargs='?', const=generate_password(), help='server password')
   parser.add_argument('-s', '--serverdir', dest='!serverdir', metavar='path', help='server executable directory (current directory by default)')
-  parser.add_argument('--plugins', metavar=('file1', 'file2'), nargs='+', help='list of plugins to be loaded (full or relative paths or just @names)')
+  parser.add_argument('-d', '--plugins', dest='plugins', metavar=('file1', 'file2'), nargs='+', help='list of plugins to be loaded (full or relative paths or just @names)')
   parser.add_argument('-p', '--port', dest='port', metavar='number', type=int, default=7777, help='server port')
   parser.add_argument('-q', '--query', dest='query', action='store_const', const=1, default=0, help='allow querying server info from outside world (e.g. server browser)')
   parser.add_argument('-r', '--rcon', dest='rcon', action='store_const', const=1, default=0, help='toggle RCON (Remote CONsole)')

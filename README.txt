@@ -6,9 +6,9 @@ usage: samp-server-cli.py [-h] [-a] [-b address] [-C] [-c cmd [args ...]]
                           [-n "My SA-MP server"] [-l] [--logqueries]
                           [--logtimeformat format] [-m name]
                           [--maxplayers number] [--maxnpc number] [-o]
-                          [-P [password]] [-s path]
-                          [--plugins file1 [file2 ...]] [-p number] [-q] [-r]
-                          [-R password] [-T] [-u url] [-w path]
+                          [-P [password]] [-s path] [-d file1 [file2 ...]]
+                          [-p number] [-q] [-r] [-R password] [-T] [-u url]
+                          [-w path]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -62,7 +62,7 @@ optional arguments:
   -s path, --serverdir path
                         server executable directory (current directory by
                         default)
-  --plugins file1 [file2 ...]
+  -d file1 [file2 ...], --plugins file1 [file2 ...]
                         list of plugins to be loaded (full or relative paths
                         or just @names)
   -p number, --port number
