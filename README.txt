@@ -1,13 +1,14 @@
 usage: samp-server-cli.py [-h] [-a] [-b address] [-C] [-c cmd [args ...]]
                           [-e name value [name value ...]] [-f name/path] -g
-                          file [-g1 file] [-g2 file] [-g3 file] [-g4 file]
-                          [-g5 file] [-g6 file] [-g7 file] [-g8 file]
-                          [-g9 file] [-t "My Gamemode"] [-n "My SA-MP server"]
-                          [-l] [--logqueries] [--logtimeformat format]
-                          [-m name] [--maxplayers number] [--maxnpc number]
-                          [-o] [-P [password]] [-s path] [-d name/path]
-                          [-p number] [-q] [-r] [-R password] [-T] [-u url]
-                          [-w path]
+                          name/path [-g1 name/path] [-g2 name/path]
+                          [-g3 name/path] [-g4 name/path] [-g5 name/path]
+                          [-g6 name/path] [-g7 name/path] [-g8 name/path]
+                          [-g9 name/path] [-t "My Gamemode"]
+                          [-n "My SA-MP server"] [-l] [--logqueries]
+                          [--logtimeformat format] [-m name]
+                          [--maxplayers number] [--maxnpc number] [-o]
+                          [-P [password]] [-s path] [-d name/path] [-p number]
+                          [-q] [-r] [-R password] [-T] [-u url] [-w path]
 
 A command line interface to SA:MP server
 
@@ -25,25 +26,25 @@ optional arguments:
   -f name/path, --filterscript name/path
                         add filterscript; multiple occurences of this option
                         are allowed
-  -g file, -g0 file, --gamemode file, --gamemode0 file
+  -g name/path, -g0 name/path, --gamemode name/path, --gamemode0 name/path
                         set startup game mode (mode #0)
-  -g1 file, --gamemode1 file
+  -g1 name/path, --gamemode1 name/path
                         set game mode #1
-  -g2 file, --gamemode2 file
+  -g2 name/path, --gamemode2 name/path
                         set game mode #2
-  -g3 file, --gamemode3 file
+  -g3 name/path, --gamemode3 name/path
                         set game mode #3
-  -g4 file, --gamemode4 file
+  -g4 name/path, --gamemode4 name/path
                         set game mode #4
-  -g5 file, --gamemode5 file
+  -g5 name/path, --gamemode5 name/path
                         set game mode #5
-  -g6 file, --gamemode6 file
+  -g6 name/path, --gamemode6 name/path
                         set game mode #6
-  -g7 file, --gamemode7 file
+  -g7 name/path, --gamemode7 name/path
                         set game mode #7
-  -g8 file, --gamemode8 file
+  -g8 name/path, --gamemode8 name/path
                         set game mode #8
-  -g9 file, --gamemode9 file
+  -g9 name/path, --gamemode9 name/path
                         set game mode #9
   -t "My Gamemode", --gamemodetext "My Gamemode"
                         set game mode text (shown in server browser)

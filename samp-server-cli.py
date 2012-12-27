@@ -47,9 +47,9 @@ def get_options():
   parser.add_argument('-c', '--command', metavar=('cmd', 'args'), nargs='+', help='override server startup command (path to server executable by default)')
   parser.add_argument('-e', '--extra', dest='extra', metavar='name value', nargs='+', help='write additional options (order may change)')
   parser.add_argument('-f', '--filterscript', dest='filterscripts', metavar='name/path', action='append', help='add filterscript; multiple occurences of this option are allowed')
-  parser.add_argument('-g', '-g0', '--gamemode', '--gamemode0', dest='gamemode0', metavar='file', required=True, help='set startup game mode (mode #0)')
+  parser.add_argument('-g', '-g0', '--gamemode', '--gamemode0', dest='gamemode0', metavar='name/path', required=True, help='set startup game mode (mode #0)')
   for i in range(1, 10):
-    parser.add_argument('-g%d' % i, '--gamemode%d' % i, dest='gamemode%d' % i, metavar='file', help='set game mode #%d' % i)
+    parser.add_argument('-g%d' % i, '--gamemode%d' % i, dest='gamemode%d' % i, metavar='name/path', help='set game mode #%d' % i)
   parser.add_argument('-t', '--gamemodetext', dest='gamemodetext', metavar='"My Gamemode"', help='set game mode text (shown in server browser)')
   parser.add_argument('-n', '--hostname', dest='hostname', metavar='"My SA-MP server"', help='set host name (shown in server browser)')
   parser.add_argument('-l', '--lanmode', dest='lanmode', action='store_const', const=1, default=0, help='enable LAN mode')
