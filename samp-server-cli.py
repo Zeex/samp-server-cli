@@ -74,6 +74,10 @@ def get_options():
   args = parser.parse_args(sys.argv[1:])
   return vars(args)
 
+def quiet_mkdir(path):
+  if not os.path.exists(path):
+    os.mkdir(path)
+
 def read_config(filename):
   options = {}
   file = open(filename, 'r')
@@ -97,14 +101,9 @@ def group(n, iterable, padvalue=None):
     "group(3, 'abcdefg', 'x') --> ('a','b','c'), ('d','e','f'), ('g','x','x')"
     return itertools.izip_longest(*[iter(iterable)]*n, fillvalue=padvalue)
 
-def quiet_mkdir(path):
-  if not os.path.exists(path):
-    os.mkdir(path)
-
 def run(options):
   working_dir = options['workingdir']
-  if not os.path.exists(working_dir):
-    os.mkdir(working_dir)
+  quiet_mkdir(working_dir)
   del options['workingdir']
 
   server_dir = options['serverdir']
