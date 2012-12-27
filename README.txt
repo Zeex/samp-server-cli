@@ -8,7 +8,7 @@ usage: samp-server-cli.py [-h] [-a] [-b address] [-C]
                           [-maxplayers number] [-maxnpc number] [-o]
                           [-P [password]] [-s path]
                           [-plugins [path [path ...]]] [-p number] [-q] [-r]
-                          [-R password] [-t] [-u url] [-w path]
+                          [-R password] [-T] [-u url] [-w path]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -69,7 +69,7 @@ optional arguments:
   -r, -rcon             toggle RCON (Remote CONsole)
   -R password, -rconpassword password
                         RCON admin password
-  -t, -timestamp        show time stamps in log
+  -T, -timestamp        show time stamps in log
   -u url, -weburl url   website URL
   -w path, -workingdir path
                         set working directory (current directory by default)

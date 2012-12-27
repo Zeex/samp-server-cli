@@ -62,7 +62,7 @@ def get_options():
   parser.add_argument('-q', '-query', dest='query', action='store_const', const=1, default=0, help='allow querying server info from outside world (e.g. server browser)')
   parser.add_argument('-r', '-rcon', dest='rcon', action='store_const', const=1, default=0, help='toggle RCON (Remote CONsole)')
   parser.add_argument('-R', '-rconpassword', dest='rcon_password', metavar='password', default=generate_password(), help='RCON admin password')
-  parser.add_argument('-t', '-timestamp', dest='timestamp', action='store_const', const=1, default=0, help='show time stamps in log')
+  parser.add_argument('-T', '-timestamp', dest='timestamp', action='store_const', const=1, default=0, help='show time stamps in log')
   parser.add_argument('-u', '-weburl', dest='weburl', metavar='url', help='website URL')
   parser.add_argument('-w', '-workingdir', dest='!workingdir', metavar='path', default='.', help='set working directory (current directory by default)')
 
