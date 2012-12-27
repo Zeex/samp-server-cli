@@ -1,4 +1,4 @@
-usage: samp-server-cli.py [-h] [-a] [-b address] [-c]
+usage: samp-server-cli.py [-h] [-a] [-b address] [-C]
                           [-e [options [options ...]]] [-f [path [path ...]]]
                           -g path [-g1 path] [-g2 path] [-g3 path] [-g4 path]
                           [-g5 path] [-g6 path] [-g7 path] [-g8 path]
@@ -15,7 +15,7 @@ optional arguments:
   -a, -announce         toggle announcement to masterlist
   -b address, -bind address
                         bind to specific IP address
-  -c, -chatlogging      toggle chat logging
+  -C, -chatlogging      toggle chat logging
   -e [options [options ...]], -extra [options [options ...]]
                         additional options (order may change)
   -f [path [path ...]], -filterscripts [path [path ...]]
