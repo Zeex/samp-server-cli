@@ -25,6 +25,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 import argparse
+import itertools
 import os
 import random
 import string
@@ -40,6 +41,7 @@ def get_options():
   parser.add_argument('-a', '-announce', dest='announce', action='store_const', const=1, default=0, help='toggle announcement to masterlist')
   parser.add_argument('-b', '-bind', dest='bind', metavar='address', help='bind to specific IP address')
   parser.add_argument('-c', '-chatlogging', dest='chatlogging', action='store_const', const=1, default=0, help='toggle chat logging')
+  parser.add_argument('-e', '-extra', dest='extra', metavar='options', nargs='*', help='additional options (order may change)')
   parser.add_argument('-f', '-filterscripts', dest='filterscripts', metavar='path', nargs='*', help='list of filter scripts to be loaded (full or relative paths or just @names')
   parser.add_argument('-g', '-g0', '-gamemode', '-gamemode0', dest='gamemode0', metavar='path', required=True, help='main game mode (full or relative path or just @name)')
   for i in range(1, 10):
@@ -80,6 +82,10 @@ def mkdir(path):
   if not os.path.exists(path):
     os.mkdir(path)
 
+def group(n, iterable, padvalue=None):
+    "group(3, 'abcdefg', 'x') --> ('a','b','c'), ('d','e','f'), ('g','x','x')"
+    return itertools.izip_longest(*[iter(iterable)]*n, fillvalue=padvalue)
+
 def run(options):
   working_dir = options['!workingdir']
   if not os.path.exists(working_dir):
@@ -119,6 +125,11 @@ def run(options):
     server_exe = 'samp03svr'
   server_exe = os.path.join(server_dir, server_exe)
 
+  extra = options['extra']
+  if extra is not None:
+    extra_options = dict(group(2, extra))
+    options.update(extra_options)
+    del options['extra']
   write_config(os.path.join(working_dir, 'server.cfg'), options)
 
   mkdir(os.path.join(working_dir, 'gamemodes'))

@@ -1,4 +1,5 @@
-usage: samp-server-cli.py [-h] [-a] [-b address] [-c] [-f [path [path ...]]]
+usage: samp-server-cli.py [-h] [-a] [-b address] [-c]
+                          [-e [options [options ...]]] [-f [path [path ...]]]
                           -g path [-g1 path] [-g2 path] [-g3 path] [-g4 path]
                           [-g5 path] [-g6 path] [-g7 path] [-g8 path]
                           [-g9 path] [-x "My Game Mode"]
@@ -15,6 +16,8 @@ optional arguments:
   -b address, -bind address
                         bind to specific IP address
   -c, -chatlogging      toggle chat logging
+  -e [options [options ...]], -extra [options [options ...]]
+                        additional options (order may change)
   -f [path [path ...]], -filterscripts [path [path ...]]
                         list of filter scripts to be loaded (full or relative
                         paths or just @names
