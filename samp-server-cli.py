@@ -46,7 +46,7 @@ def get_options():
   parser.add_argument('-g', '-g0', '-gamemode', '-gamemode0', dest='gamemode0', metavar='path', required=True, help='main game mode (full or relative path or just @name)')
   for i in range(1, 10):
     parser.add_argument('-g%d' % i, '-gamemode%d' % i, dest='gamemode%d' % i, metavar='path', help='game mode #%d' % i)
-  parser.add_argument('-x', '-gamemodetext', dest='gamemodetext', metavar='"My Game Mode"', help='game mode text (shown in server browser)')
+  parser.add_argument('-t', '-gamemodetext', dest='gamemodetext', metavar='"My Game Mode"', help='game mode text (shown in server browser)')
   parser.add_argument('-n', '-hostname', dest='hostname', metavar='"My SA-MP server"', help='host name (shown in server browser)')
   parser.add_argument('-l', '-lanmode', dest='lanmode', action='store_const', const=1, default=0, help='toggle LAN mode')
   parser.add_argument('-logqueries', action='store_const', const=1, default=0, help='toggle logging of queries sent by players')

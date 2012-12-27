@@ -2,7 +2,7 @@ usage: samp-server-cli.py [-h] [-a] [-b address] [-C]
                           [-e [options [options ...]]] [-f [path [path ...]]]
                           -g path [-g1 path] [-g2 path] [-g3 path] [-g4 path]
                           [-g5 path] [-g6 path] [-g7 path] [-g8 path]
-                          [-g9 path] [-x "My Game Mode"]
+                          [-g9 path] [-t "My Game Mode"]
                           [-n "My SA-MP server"] [-l] [-logqueries]
                           [-logtimeformat format] [-m name]
                           [-maxplayers number] [-maxnpc number] [-o]
@@ -41,7 +41,7 @@ optional arguments:
                         game mode #8
   -g9 path, -gamemode9 path
                         game mode #9
-  -x "My Game Mode", -gamemodetext "My Game Mode"
+  -t "My Game Mode", -gamemodetext "My Game Mode"
                         game mode text (shown in server browser)
   -n "My SA-MP server", -hostname "My SA-MP server"
                         host name (shown in server browser)
