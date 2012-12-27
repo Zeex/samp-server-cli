@@ -8,7 +8,7 @@ usage: samp-server-cli.py [-h] [-a] [-b address] [--chatlogging] [-c cmd]
                           [--logtimeformat format] [-m name]
                           [--maxplayers number] [--maxnpc number] [-o]
                           [-P [password]] [-s path] [-d name/path] [-p number]
-                          [-q] [-r] [-R password] [-T] [-u url] [-w path]
+                          [-q] [-r] [-R password] [-T] [-u url] [-w path] [-W]
 
 A command line interface to SA:MP server
 
@@ -79,4 +79,6 @@ optional arguments:
   -T, --timestamp       show timestamps in log
   -u url, --weburl url  website URL
   -w path, --workingdir path
-                        set working directory (current directory by default)
+                        set working directory (server directory by default)
+  -W, --worklocal       set working directory to current directory (same as "
+                        --workingdir .")

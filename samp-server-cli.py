@@ -71,6 +71,7 @@ def get_options():
   parser.add_argument('-T', '--timestamp', dest='timestamp', action='store_const', const=1, default=0, help='show timestamps in log')
   parser.add_argument('-u', '--weburl', dest='weburl', metavar='url', help='website URL')
   parser.add_argument('-w', '--workingdir', metavar='path', help='set working directory (server directory by default)')
+  parser.add_argument('-W', '--worklocal', action='store_true', default=False, help='set working directory to current directory (same as "--workingdir .")')
 
   args = parser.parse_args(sys.argv[1:])
   return vars(args)
@@ -120,9 +121,15 @@ def run(options):
     server_dir = os.path.abspath(server_dir)
   del options['serverdir']
 
+  work_locally = options['worklocal']
+  del options['worklocal']
+
   working_dir = options['workingdir']
   if working_dir is None:
-    working_dir = server_dir
+    if work_locally:
+      working_dir = os.getcwd()
+    else:
+      working_dir = server_dir
   else:
     quiet_mkdir(working_dir)
   del options['workingdir']
