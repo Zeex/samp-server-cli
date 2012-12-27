@@ -45,7 +45,7 @@ def get_options():
   parser.add_argument('-a', '--announce', dest='announce', action='store_const', const=1, default=0, help='announce to server masterlist')
   parser.add_argument('-b', '--bind', dest='bind', metavar='address', help='bind to specific IP address')
   parser.add_argument('--chatlogging', dest='chatlogging', action='store_const', const=1, default=0, help='enable chat logging')
-  parser.add_argument('-c', '--command', metavar=('cmd', 'args'), nargs='+', help='override server startup command (path to server executable by default)')
+  parser.add_argument('-c', '--command', metavar='cmd', help='override server startup command (path to server executable by default)')
   parser.add_argument('-C', '--config', metavar='filename', help='copy options from file')
   parser.add_argument('-e', '--extra', dest='extra', metavar='name value', nargs='+', help='write additional options (order may change)')
   parser.add_argument('-f', '--filterscript', dest='filterscripts', metavar='name/path', action='append', help='add filter script; multiple occurences of this option are allowed')
@@ -186,7 +186,7 @@ def run(options):
 
   os.chdir(working_dir)
   try:
-    subprocess.call(command)
+    subprocess.call(command, shell=True)
   except KeyboardInterrupt:
     pass
 
