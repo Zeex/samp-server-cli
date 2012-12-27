@@ -43,7 +43,7 @@ def get_options():
   parser.add_argument('-C', '--chatlogging', dest='chatlogging', action='store_const', const=1, default=0, help='toggle chat logging')
   parser.add_argument('-c', '--command', dest='!command', metavar=('cmd', 'args'), nargs='+', help='override server startup command (default is path to server executable)')
   parser.add_argument('-e', '--extra', dest='extra', metavar='options', nargs='+', help='additional options (order may change)')
-  parser.add_argument('-f', '--filterscripts', dest='filterscripts', metavar=('file1', 'file2'), nargs='+', help='list of filter scripts to be loaded (full or relative paths or just @names')
+  parser.add_argument('-f', '--filterscript', dest='filterscripts', metavar='path', action='append', help='load filter script (full or relative path or just @name); multiple occurences of this option are allowed')
   parser.add_argument('-g', '-g0', '--gamemode', '--gamemode0', dest='gamemode0', metavar='file', required=True, help='main game mode (full or relative path or just @name)')
   for i in range(1, 10):
     parser.add_argument('-g%d' % i, '--gamemode%d' % i, dest='gamemode%d' % i, metavar='file', help='game mode #%d' % i)
@@ -58,7 +58,7 @@ def get_options():
   parser.add_argument('-o', '--output', dest='output', action='store_const', const=1, default=0, help='toggle console output')
   parser.add_argument('-P', '--password', dest='password', metavar='password', nargs='?', const=generate_password(), help='server password')
   parser.add_argument('-s', '--serverdir', dest='!serverdir', metavar='path', help='server executable directory (current directory by default)')
-  parser.add_argument('-d', '--plugins', dest='plugins', metavar=('file1', 'file2'), nargs='+', help='list of plugins to be loaded (full or relative paths or just @names)')
+  parser.add_argument('-d', '--plugin', dest='plugins', metavar='path', action='append', help='load plugin (full or relative path or just @name); multiple occurences of this option are allowed')
   parser.add_argument('-p', '--port', dest='port', metavar='number', type=int, default=7777, help='server port')
   parser.add_argument('-q', '--query', dest='query', action='store_const', const=1, default=0, help='allow querying server info from outside world (e.g. server browser)')
   parser.add_argument('-r', '--rcon', dest='rcon', action='store_const', const=1, default=0, help='toggle RCON (Remote CONsole)')

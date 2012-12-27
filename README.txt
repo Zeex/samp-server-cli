@@ -1,14 +1,13 @@
 usage: samp-server-cli.py [-h] [-a] [-b address] [-C] [-c cmd [args ...]]
-                          [-e options [options ...]] [-f file1 [file2 ...]] -g
-                          file [-g1 file] [-g2 file] [-g3 file] [-g4 file]
+                          [-e options [options ...]] [-f path] -g file
+                          [-g1 file] [-g2 file] [-g3 file] [-g4 file]
                           [-g5 file] [-g6 file] [-g7 file] [-g8 file]
                           [-g9 file] [-t "My Game Mode"]
                           [-n "My SA-MP server"] [-l] [--logqueries]
                           [--logtimeformat format] [-m name]
                           [--maxplayers number] [--maxnpc number] [-o]
-                          [-P [password]] [-s path] [-d file1 [file2 ...]]
-                          [-p number] [-q] [-r] [-R password] [-T] [-u url]
-                          [-w path]
+                          [-P [password]] [-s path] [-d path] [-p number] [-q]
+                          [-r] [-R password] [-T] [-u url] [-w path]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -21,9 +20,9 @@ optional arguments:
                         server executable)
   -e options [options ...], --extra options [options ...]
                         additional options (order may change)
-  -f file1 [file2 ...], --filterscripts file1 [file2 ...]
-                        list of filter scripts to be loaded (full or relative
-                        paths or just @names
+  -f path, --filterscript path
+                        load filter script (full or relative path or just
+                        @name); multiple occurences of this option are allowed
   -g file, -g0 file, --gamemode file, --gamemode0 file
                         main game mode (full or relative path or just @name)
   -g1 file, --gamemode1 file
@@ -62,9 +61,9 @@ optional arguments:
   -s path, --serverdir path
                         server executable directory (current directory by
                         default)
-  -d file1 [file2 ...], --plugins file1 [file2 ...]
-                        list of plugins to be loaded (full or relative paths
-                        or just @names)
+  -d path, --plugin path
+                        load plugin (full or relative path or just @name);
+                        multiple occurences of this option are allowed
   -p number, --port number
                         server port
   -q, --query           allow querying server info from outside world (e.g.
