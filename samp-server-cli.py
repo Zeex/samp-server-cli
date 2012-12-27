@@ -70,7 +70,7 @@ def get_options():
   parser.add_argument('-R', '--rconpassword', dest='rcon_password', metavar='password', default=generate_password(), help='RCON admin password')
   parser.add_argument('-T', '--timestamp', dest='timestamp', action='store_const', const=1, default=0, help='show timestamps in log')
   parser.add_argument('-u', '--weburl', dest='weburl', metavar='url', help='website URL')
-  parser.add_argument('-w', '--workingdir', metavar='path', default='.', help='set working directory (current directory by default)')
+  parser.add_argument('-w', '--workingdir', metavar='path', help='set working directory (current directory by default)')
 
   args = parser.parse_args(sys.argv[1:])
   return vars(args)
@@ -111,10 +111,6 @@ def group(n, iterable, padvalue=None):
     return itertools.izip_longest(*[iter(iterable)]*n, fillvalue=padvalue)
 
 def run(options):
-  working_dir = options['workingdir']
-  quiet_mkdir(working_dir)
-  del options['workingdir']
-
   server_dir = options['serverdir']
   if server_dir is None:
     server_dir = os.environ.get('SAMP_SERVER_ROOT')
@@ -123,6 +119,13 @@ def run(options):
   if not os.path.isabs(server_dir):
     server_dir = os.path.abspath(server_dir)
   del options['serverdir']
+
+  working_dir = options['workingdir']
+  if working_dir is None:
+    working_dir = os.getcwd()
+  else:
+    quiet_mkdir(working_dir)
+  del options['workingdir']
 
   command = options['command']
   if command is None:
