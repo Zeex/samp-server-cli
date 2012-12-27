@@ -23,10 +23,10 @@ optional arguments:
   -e options [options ...], --extra options [options ...]
                         additional options (order may change)
   -f path, --filterscript path
-                        load filter script (full or relative path or just
-                        @name); multiple occurences of this option are allowed
+                        load filter script (name or full/relative path);
+                        multiple occurences of this option are allowed
   -g file, -g0 file, --gamemode file, --gamemode0 file
-                        main game mode (full or relative path or just @name)
+                        main game mode (name or full/relative path)
   -g1 file, --gamemode1 file
                         game mode #1
   -g2 file, --gamemode2 file
@@ -64,8 +64,8 @@ optional arguments:
                         server executable directory (current directory by
                         default)
   -d path, --plugin path
-                        load plugin (full or relative path or just @name);
-                        multiple occurences of this option are allowed
+                        load plugin (name or full/relative path); multiple
+                        occurences of this option are allowed
   -p number, --port number
                         server port
   -q, --query           allow querying server info from outside world (e.g.
