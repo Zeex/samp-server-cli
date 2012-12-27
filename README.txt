@@ -1,4 +1,4 @@
-usage: samp-server-cli.py [-h] [-a] [-b address] [-C]
+usage: samp-server-cli.py [-h] [-a] [-b address] [-C] [-c cmd [args ...]]
                           [-e [options [options ...]]] [-f [path [path ...]]]
                           -g path [-g1 path] [-g2 path] [-g3 path] [-g4 path]
                           [-g5 path] [-g6 path] [-g7 path] [-g8 path]
@@ -16,6 +16,9 @@ optional arguments:
   -b address, -bind address
                         bind to specific IP address
   -C, -chatlogging      toggle chat logging
+  -c cmd [args ...], -command cmd [args ...]
+                        override server startup command (default is path to
+                        server executable)
   -e [options [options ...]], -extra [options [options ...]]
                         additional options (order may change)
   -f [path [path ...]], -filterscripts [path [path ...]]

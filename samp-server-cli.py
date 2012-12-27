@@ -41,6 +41,7 @@ def get_options():
   parser.add_argument('-a', '-announce', dest='announce', action='store_const', const=1, default=0, help='toggle announcement to masterlist')
   parser.add_argument('-b', '-bind', dest='bind', metavar='address', help='bind to specific IP address')
   parser.add_argument('-C', '-chatlogging', dest='chatlogging', action='store_const', const=1, default=0, help='toggle chat logging')
+  parser.add_argument('-c', '-command', dest='!command', metavar=('cmd', 'args'), nargs='+', help='override server startup command (default is path to server executable)')
   parser.add_argument('-e', '-extra', dest='extra', metavar='options', nargs='*', help='additional options (order may change)')
   parser.add_argument('-f', '-filterscripts', dest='filterscripts', metavar='path', nargs='*', help='list of filter scripts to be loaded (full or relative paths or just @names')
   parser.add_argument('-g', '-g0', '-gamemode', '-gamemode0', dest='gamemode0', metavar='path', required=True, help='main game mode (full or relative path or just @name)')
@@ -119,11 +120,14 @@ def run(options):
       server_dir = os.getcwd()
   if not os.path.isabs(server_dir):
     server_dir = os.path.abspath(server_dir)
-  if os.name == 'nt':
-    server_exe = 'samp-server.exe'
-  else:
-    server_exe = 'samp03svr'
-  server_exe = os.path.join(server_dir, server_exe)
+
+  command = options['!command']
+  if command is None:
+    if os.name == 'nt':
+      server_exe = 'samp-server.exe'
+    else:
+      server_exe = 'samp03svr'
+    command = os.path.join(server_dir, server_exe)
 
   extra = options['extra']
   if extra is not None:
@@ -137,7 +141,7 @@ def run(options):
 
   os.chdir(working_dir)
   try:
-    subprocess.call(server_exe)
+    subprocess.call(command)
   except KeyboardInterrupt:
     pass
 
