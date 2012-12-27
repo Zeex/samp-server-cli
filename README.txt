@@ -3,7 +3,7 @@ usage: samp-server-cli.py [-h] [-a] [-b address] [-C] [-c cmd [args ...]]
                           name/path [-g1 name/path] [-g2 name/path]
                           [-g3 name/path] [-g4 name/path] [-g5 name/path]
                           [-g6 name/path] [-g7 name/path] [-g8 name/path]
-                          [-g9 name/path] [-t "My Gamemode"]
+                          [-g9 name/path] [-t "My Game Mode"]
                           [-n "My SA-MP server"] [-l] [--logqueries]
                           [--logtimeformat format] [-m name]
                           [--maxplayers number] [--maxnpc number] [-o]
@@ -24,7 +24,7 @@ optional arguments:
   -e name value [name value ...], --extra name value [name value ...]
                         write additional options (order may change)
   -f name/path, --filterscript name/path
-                        add filterscript; multiple occurences of this option
+                        add filter script; multiple occurences of this option
                         are allowed
   -g name/path, -g0 name/path, --gamemode name/path, --gamemode0 name/path
                         set startup game mode (mode #0)
@@ -46,7 +46,7 @@ optional arguments:
                         set game mode #8
   -g9 name/path, --gamemode9 name/path
                         set game mode #9
-  -t "My Gamemode", --gamemodetext "My Gamemode"
+  -t "My Game Mode", --gamemodetext "My Game Mode"
                         set game mode text (shown in server browser)
   -n "My SA-MP server", --hostname "My SA-MP server"
                         set host name (shown in server browser)
