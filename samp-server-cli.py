@@ -186,9 +186,9 @@ def run(options):
 
   os.chdir(working_dir)
   try:
-    subprocess.call(command, shell=True)
+    return subprocess.call(command, shell=True)
   except KeyboardInterrupt:
-    pass
+    return 0
 
 if __name__ == '__main__':
-  run(get_options())
+  sys.exit(run(get_options()))
