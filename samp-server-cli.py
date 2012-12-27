@@ -44,7 +44,7 @@ def get_options():
   parser.add_argument('-a', '--announce', dest='announce', action='store_const', const=1, default=0, help='announce to server masterlist')
   parser.add_argument('-b', '--bind', dest='bind', metavar='address', help='bind to specific IP address')
   parser.add_argument('-C', '--chatlogging', dest='chatlogging', action='store_const', const=1, default=0, help='enable chat logging')
-  parser.add_argument('-c', '--command', dest='!command', metavar=('cmd', 'args'), nargs='+', help='override server startup command (path to server executable by default)')
+  parser.add_argument('-c', '--command', metavar=('cmd', 'args'), nargs='+', help='override server startup command (path to server executable by default)')
   parser.add_argument('-e', '--extra', dest='extra', metavar='name value', nargs='+', help='write additional options (order may change)')
   parser.add_argument('-f', '--filterscript', dest='filterscripts', metavar='name/path', action='append', help='add filterscript; multiple occurences of this option are allowed')
   parser.add_argument('-g', '-g0', '--gamemode', '--gamemode0', dest='gamemode0', metavar='file', required=True, help='set startup game mode (mode #0)')
@@ -60,7 +60,7 @@ def get_options():
   parser.add_argument('--maxnpc', metavar='number', type=int, default=0, help='set max. number of NPCs (bots)')
   parser.add_argument('-o', '--output', dest='output', action='store_const', const=1, default=0, help='enable console output')
   parser.add_argument('-P', '--password', dest='password', metavar='password', nargs='?', const=generate_password(), help='server password')
-  parser.add_argument('-s', '--serverdir', dest='!serverdir', metavar='path', help='set directory of server executable (current directory by default); not necesssary if you use -c')
+  parser.add_argument('-s', '--serverdir', metavar='path', help='set directory of server executable (current directory by default); not necesssary if you use -c')
   parser.add_argument('-d', '--plugin', dest='plugins', metavar='name/path', action='append', help='add plugin; multiple occurences of this option are allowed')
   parser.add_argument('-p', '--port', dest='port', metavar='number', type=int, default=7777, help='set server port')
   parser.add_argument('-q', '--query', dest='query', action='store_const', const=1, default=0, help='allow querying server info from outside world (e.g. server browser)')
@@ -68,7 +68,7 @@ def get_options():
   parser.add_argument('-R', '--rconpassword', dest='rcon_password', metavar='password', default=generate_password(), help='RCON admin password')
   parser.add_argument('-T', '--timestamp', dest='timestamp', action='store_const', const=1, default=0, help='show timestamps in log')
   parser.add_argument('-u', '--weburl', dest='weburl', metavar='url', help='website URL')
-  parser.add_argument('-w', '--workingdir', dest='!workingdir', metavar='path', default='.', help='set working directory (current directory by default)')
+  parser.add_argument('-w', '--workingdir', metavar='path', default='.', help='set working directory (current directory by default)')
 
   args = parser.parse_args(sys.argv[1:])
   return vars(args)
@@ -76,8 +76,6 @@ def get_options():
 def write_config(filename, options):
   file = open(filename, 'w')
   for name, value in options.items():
-    if name.startswith('!'):
-      continue
     if value is not None:
       file.write('%s %s\n' % (name, value))
   file.close()
@@ -91,9 +89,10 @@ def group(n, iterable, padvalue=None):
     return itertools.izip_longest(*[iter(iterable)]*n, fillvalue=padvalue)
 
 def run(options):
-  working_dir = options['!workingdir']
+  working_dir = options['workingdir']
   if not os.path.exists(working_dir):
     os.mkdir(working_dir)
+  del options['workingdir']
 
   dirs = { 'filterscripts': 'filterscripts',
            'plugins':       'plugins',
@@ -119,27 +118,30 @@ def run(options):
           values[i] = os.path.relpath(v, dir)
       options[name] = '%s' % ' '.join(values)
 
-  server_dir = options['!serverdir']
+  server_dir = options['serverdir']
   if server_dir is None:
     server_dir = os.environ.get('SAMP_SERVER_ROOT')
     if server_dir is None:
       server_dir = os.getcwd()
   if not os.path.isabs(server_dir):
     server_dir = os.path.abspath(server_dir)
+  del options['serverdir']
 
-  command = options['!command']
+  command = options['command']
   if command is None:
     if os.name == 'nt':
       server_exe = 'samp-server.exe'
     else:
       server_exe = 'samp03svr'
     command = os.path.join(server_dir, server_exe)
+  del options['command']
 
   extra = options['extra']
   if extra is not None:
     extra_options = dict(group(2, extra))
     options.update(extra_options)
-    del options['extra']
+  del options['extra']
+
   write_config(os.path.join(working_dir, 'server.cfg'), options)
 
   mkdir(os.path.join(working_dir, 'gamemodes'))
