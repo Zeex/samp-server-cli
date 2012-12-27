@@ -1,4 +1,5 @@
-usage: samp-server-cli.py [-h] [-a] [-b address] [-C] [-c cmd [args ...]]
+usage: samp-server-cli.py [-h] [-a] [-b address] [--chatlogging]
+                          [-c cmd [args ...]] [-C filename]
                           [-e name value [name value ...]] [-f name/path] -g
                           name/path [-g1 name/path] [-g2 name/path]
                           [-g3 name/path] [-g4 name/path] [-g5 name/path]
@@ -17,10 +18,12 @@ optional arguments:
   -a, --announce        announce to server masterlist
   -b address, --bind address
                         bind to specific IP address
-  -C, --chatlogging     enable chat logging
+  --chatlogging         enable chat logging
   -c cmd [args ...], --command cmd [args ...]
                         override server startup command (path to server
                         executable by default)
+  -C filename, --config filename
+                        copy options from file
   -e name value [name value ...], --extra name value [name value ...]
                         write additional options (order may change)
   -f name/path, --filterscript name/path

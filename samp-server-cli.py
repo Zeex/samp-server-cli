@@ -43,8 +43,9 @@ def get_options():
 
   parser.add_argument('-a', '--announce', dest='announce', action='store_const', const=1, default=0, help='announce to server masterlist')
   parser.add_argument('-b', '--bind', dest='bind', metavar='address', help='bind to specific IP address')
-  parser.add_argument('-C', '--chatlogging', dest='chatlogging', action='store_const', const=1, default=0, help='enable chat logging')
+  parser.add_argument('--chatlogging', dest='chatlogging', action='store_const', const=1, default=0, help='enable chat logging')
   parser.add_argument('-c', '--command', metavar=('cmd', 'args'), nargs='+', help='override server startup command (path to server executable by default)')
+  parser.add_argument('-C', '--config', metavar='filename', help='copy options from file')
   parser.add_argument('-e', '--extra', dest='extra', metavar='name value', nargs='+', help='write additional options (order may change)')
   parser.add_argument('-f', '--filterscript', dest='filterscripts', metavar='name/path', action='append', help='add filter script; multiple occurences of this option are allowed')
   parser.add_argument('-g', '-g0', '--gamemode', '--gamemode0', dest='gamemode0', metavar='name/path', required=True, help='set startup game mode (mode #0)')
@@ -72,6 +73,18 @@ def get_options():
 
   args = parser.parse_args(sys.argv[1:])
   return vars(args)
+
+def read_config(filename):
+  options = {}
+  file = open(filename, 'r')
+  for line in file.readlines():
+    try:
+      name, value = string.split(line.strip(), maxsplit=1)
+      options[name] = value
+    except ValueError:
+      continue
+  file.close()
+  return options
 
 def write_config(filename, options):
   file = open(filename, 'w')
@@ -141,6 +154,12 @@ def run(options):
     extra_options = dict(group(2, extra))
     options.update(extra_options)
   del options['extra']
+
+  config = options['config']
+  if config is not None:
+    config_options = read_config(config)
+    options.update(config_options)
+  del options['config']
 
   write_config(os.path.join(working_dir, 'server.cfg'), options)
 
