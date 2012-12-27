@@ -137,6 +137,18 @@ def run(options):
     options.update(config_options)
   del options['config']
 
+  plugins = options['plugins'] 
+  print 'plugins:', plugins
+  if plugins is not None:
+    if os.name == 'nt':
+      ext = '.dll'
+    else:
+      ext = '.so'
+    for i, p in enumerate(plugins):
+      print 'p: ', p
+      if not p.lower().endswith(ext):
+        plugins[i] += ext
+
   dirs = { 'filterscripts': 'filterscripts',
            'plugins':       'plugins',
          }
