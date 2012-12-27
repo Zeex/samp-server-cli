@@ -106,12 +106,18 @@ def run(options):
           values[i] = os.path.relpath(v, dir)
       options[name] = '%s' % ' '.join(values)
 
-  server_dir = os.path.abspath(options['!serverdir'])
+  server_dir = options['!serverdir']
+  if server_dir is None:
+    server_dir = os.environ.get('SAMP_SERVER_ROOT')
+    if server_dir is None:
+      server_dir = os.getcwd()
+  if not os.path.isabs(server_dir):
+    server_dir = os.path.abspath(server_dir)
   if os.name == 'nt':
     server_exe = 'samp-server.exe'
   else:
     server_exe = 'samp03svr'
-  server_path = os.path.join(server_dir, server_exe)
+  server_exe = os.path.join(server_dir, server_exe)
 
   write_config(os.path.join(working_dir, 'server.cfg'), options)
 
@@ -120,7 +126,7 @@ def run(options):
 
   os.chdir(working_dir)
   try:
-    subprocess.call(server_path)
+    subprocess.call(server_exe)
   except KeyboardInterrupt:
     pass
 
