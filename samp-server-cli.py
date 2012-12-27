@@ -47,6 +47,7 @@ def get_options():
   parser.add_argument('--chatlogging', dest='chatlogging', action='store_const', const=1, default=0, help='enable chat logging')
   parser.add_argument('-c', '--command', metavar='cmd', help='override server startup command (path to server executable by default)')
   parser.add_argument('-C', '--config', metavar='filename', help='copy options from file')
+  parser.add_argument('-D', '--debug', dest='debug', action='store_true', default=False, help='run under GDB')
   parser.add_argument('-e', '--extra', dest='extra', metavar='name value', nargs='+', help='write additional options (order may change)')
   parser.add_argument('-f', '--filterscript', dest='filterscripts', metavar='name/path', action='append', help='add filter script; multiple occurences of this option are allowed')
   parser.add_argument('-g', '-g0', '--gamemode', '--gamemode0', dest='gamemode0', metavar='name/path', required=True, help='set startup game mode (mode #0)')
@@ -181,6 +182,11 @@ def run(options):
           # Otherwise make it relative to the corresponding directory.
           values[i] = os.path.relpath(v, dir)
       options[name] = '%s' % ' '.join(values)
+
+  debug = options['debug']
+  if debug:
+    command = 'gdb --args ' + command
+  del options['debug']
 
   write_config(os.path.join(working_dir, 'server.cfg'), options)
 
