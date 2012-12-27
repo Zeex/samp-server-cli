@@ -53,7 +53,7 @@ def get_options():
   parser.add_argument('-maxplayers', metavar='number', type=int, default=500, help='max. number of players')
   parser.add_argument('-maxnpc', metavar='number', type=int, default=0, help='max. number of NPCs (bots)')
   parser.add_argument('-o', '-output', dest='output', action='store_const', const=1, default=0, help='toggle console output')
-  parser.add_argument('-P', '-password', dest='password', metavar='password', help='server password')
+  parser.add_argument('-P', '-password', dest='password', metavar='password', nargs='?', const=generate_password(), help='server password')
   parser.add_argument('-s', '-serverdir', dest='!serverdir', metavar='path', default='', help='server executable directory (current directory by default)')
   parser.add_argument('-plugins', metavar='path', nargs='*', help='list of plugins to be loaded (full or relative paths or just @names)')
   parser.add_argument('-p', '-port', dest='port', metavar='number', type=int, default=7777, help='server port')

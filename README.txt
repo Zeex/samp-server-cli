@@ -5,9 +5,9 @@ usage: samp-server-cli.py [-h] [-a] [-b address] [-c] [-f [path [path ...]]]
                           [-n "My SA-MP server"] [-l] [-logqueries]
                           [-logtimeformat format] [-m name]
                           [-maxplayers number] [-maxnpc number] [-o]
-                          [-P password] [-s path] [-plugins [path [path ...]]]
-                          [-p number] [-q] [-r] [-R password] [-t] [-u url]
-                          [-w path]
+                          [-P [password]] [-s path]
+                          [-plugins [path [path ...]]] [-p number] [-q] [-r]
+                          [-R password] [-t] [-u url] [-w path]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -51,7 +51,7 @@ optional arguments:
   -maxplayers number    max. number of players
   -maxnpc number        max. number of NPCs (bots)
   -o, -output           toggle console output
-  -P password, -password password
+  -P [password], -password [password]
                         server password
   -s path, -serverdir path
                         server executable directory (current directory by
