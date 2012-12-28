@@ -57,7 +57,7 @@ optional arguments:
   -l, --lanmode         enable LAN mode
   -L, --local           run in current directory (same as if you pass "--
                         workdir .")
-  --logqueries          enable logging of queries sent by players
+  --logqueries          enable logging of queries sent to the server
   --logtimeformat format
                         set log timestamp format
   -m name, --mapname name
