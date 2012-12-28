@@ -137,10 +137,12 @@ def run(options):
 
   command = options['command']
   if command is None:
-    if is_windows():
-      exe = 'samp-server.exe'
-    else:
-      exe = 'samp03svr'
+    exe = os.environ.get('SAMP_SERVER')
+    if exe is None:
+      if is_windows():
+        exe = 'samp-server.exe'
+      else:
+        exe = 'samp03svr'
     command = [os.path.join(servdir, exe)]
   del options['command']
 
