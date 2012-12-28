@@ -68,7 +68,7 @@ optional arguments:
   -o, --output          enable console output
   -P [password], --password [password]
                         server password
-  -s path, --serverdir path
+  -s path, --servdir path
                         set directory of server executable (current directory
                         by default); not necesssary if you use -c
   -d name/path, --plugin name/path

@@ -64,7 +64,7 @@ def get_options():
   parser.add_argument('--maxnpc', metavar='number', type=int, default=0, help='set max. number of NPCs (bots)')
   parser.add_argument('-o', '--output', dest='output', action='store_const', const=1, default=0, help='enable console output')
   parser.add_argument('-P', '--password', dest='password', metavar='password', nargs='?', const=generate_password(), help='server password')
-  parser.add_argument('-s', '--serverdir', metavar='path', help='set directory of server executable (current directory by default); not necesssary if you use -c')
+  parser.add_argument('-s', '--servdir', metavar='path', help='set directory of server executable (current directory by default); not necesssary if you use -c')
   parser.add_argument('-d', '--plugin', dest='plugins', metavar='name/path', action='append', help='add plugin; multiple occurences of this option are allowed')
   parser.add_argument('-p', '--port', dest='port', metavar='number', type=int, default=7777, help='set server port')
   parser.add_argument('-q', '--query', dest='query', action='store_const', const=1, default=0, help='allow querying server info from outside world (e.g. server browser)')
@@ -113,14 +113,14 @@ def group(n, iterable, padvalue=None):
     return itertools.izip_longest(*[iter(iterable)]*n, fillvalue=padvalue)
 
 def run(options):
-  server_dir = options['serverdir']
-  if server_dir is None:
-    server_dir = os.environ.get('SAMP_SERVER_ROOT')
-    if server_dir is None:
-      server_dir = os.getcwd()
-  if not os.path.isabs(server_dir):
-    server_dir = os.path.abspath(server_dir)
-  del options['serverdir']
+  servdir = options['servdir']
+  if servdir is None:
+    servdir = os.environ.get('SAMP_SERVER_ROOT')
+    if servdir is None:
+      servdir = os.getcwd()
+  if not os.path.isabs(servdir):
+    servdir = os.path.abspath(servdir)
+  del options['servdir']
 
   local = options['local']
   del options['local']
@@ -130,7 +130,7 @@ def run(options):
     workdir = os.getcwd()
   else:
     if workdir is None:
-      workdir = server_dir
+      workdir = servdir
     else:
       quiet_mkdir(workdir)
   del options['workdir']
@@ -138,10 +138,10 @@ def run(options):
   command = options['command']
   if command is None:
     if is_windows():
-      server_exe = 'samp-server.exe'
+      exe = 'samp-server.exe'
     else:
-      server_exe = 'samp03svr'
-    command = os.path.join(server_dir, server_exe)
+      exe = 'samp03svr'
+    command = os.path.join(servdir, exe)
   del options['command']
 
   extra = options['extra']
