@@ -1,9 +1,10 @@
-usage: samp-server-cli.py [-h] [-a] [-b address] [--chatlogging] [-c cmd]
-                          [-C filename] [-D] [-e name value [name value ...]]
-                          [-f name/path] -g name/path [-g1 name/path]
-                          [-g2 name/path] [-g3 name/path] [-g4 name/path]
-                          [-g5 name/path] [-g6 name/path] [-g7 name/path]
-                          [-g8 name/path] [-g9 name/path] [-t "My Game Mode"]
+usage: samp-server-cli.py [-h] [-a] [-b address] [--chatlogging]
+                          [-c cmd [args ...]] [-C filename] [-D]
+                          [-e name value [name value ...]] [-f name/path] -g
+                          name/path [-g1 name/path] [-g2 name/path]
+                          [-g3 name/path] [-g4 name/path] [-g5 name/path]
+                          [-g6 name/path] [-g7 name/path] [-g8 name/path]
+                          [-g9 name/path] [-t "My Game Mode"]
                           [-n "My SA-MP server"] [-l] [-L] [--logqueries]
                           [--logtimeformat format] [-m name]
                           [--maxplayers number] [--maxnpc number] [-o]
@@ -18,7 +19,7 @@ optional arguments:
   -b address, --bind address
                         bind to specific IP address
   --chatlogging         enable chat logging
-  -c cmd, --command cmd
+  -c cmd [args ...], --command cmd [args ...]
                         override server startup command (path to server
                         executable by default)
   -C filename, --config filename

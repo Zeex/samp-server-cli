@@ -45,7 +45,7 @@ def get_options():
   parser.add_argument('-a', '--announce', dest='announce', action='store_const', const=1, default=0, help='announce to server masterlist')
   parser.add_argument('-b', '--bind', dest='bind', metavar='address', help='bind to specific IP address')
   parser.add_argument('--chatlogging', dest='chatlogging', action='store_const', const=1, default=0, help='enable chat logging')
-  parser.add_argument('-c', '--command', dest='command', metavar='cmd', help='override server startup command (path to server executable by default)')
+  parser.add_argument('-c', '--command', dest='command', metavar=('cmd', 'args'), nargs='+', help='override server startup command (path to server executable by default)')
   parser.add_argument('-C', '--config', dest='config', metavar='filename', help='copy options from file')
   parser.add_argument('-D', '--debug', dest='debug', action='store_true', default=False, help='run under GDB')
   parser.add_argument('-e', '--extra', dest='extra', metavar='name value', nargs='+', help='write additional options (order may change)')
@@ -192,7 +192,7 @@ def run(options):
 
   debug = options['debug']
   if debug:
-    command = 'gdb --args ' + command
+    command = ['gdb', '--args'] + command
   del options['debug']
 
   write_config(os.path.join(workdir, 'server.cfg'), options)
@@ -202,7 +202,7 @@ def run(options):
 
   os.chdir(workdir)
   try:
-    return subprocess.call(command, shell=True)
+    return subprocess.call(command)
   except KeyboardInterrupt:
     return 0
 
