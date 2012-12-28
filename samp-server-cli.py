@@ -56,6 +56,7 @@ def get_options():
   parser.add_argument('-t', '--gamemodetext', dest='gamemodetext', metavar='"My Game Mode"', help='set game mode text (shown in server browser)')
   parser.add_argument('-n', '--hostname', dest='hostname', metavar='"My SA-MP server"', help='set host name (shown in server browser)')
   parser.add_argument('-l', '--lanmode', dest='lanmode', action='store_const', const=1, default=0, help='enable LAN mode')
+  parser.add_argument('-L', '--local', dest='local', action='store_true', default=False, help='run in current directory (same as if you pass "--workingdir .")')
   parser.add_argument('--logqueries', action='store_const', const=1, default=0, help='enable logging of queries sent by players')
   parser.add_argument('--logtimeformat', metavar='format', help='set log timestamp format')
   parser.add_argument('-m', '--mapname', dest='mapname', metavar='name', help='set map name (shown in server browser)')
@@ -121,11 +122,17 @@ def run(options):
     server_dir = os.path.abspath(server_dir)
   del options['serverdir']
 
+  local = options['local']
+  del options['local']
+
   working_dir = options['workingdir']
-  if working_dir is None:
-    working_dir = server_dir
+  if local:
+    working_dir = os.getcwd()
   else:
-    quiet_mkdir(working_dir)
+    if working_dir is None:
+      working_dir = server_dir
+    else:
+      quiet_mkdir(working_dir)
   del options['workingdir']
 
   command = options['command']

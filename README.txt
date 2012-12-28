@@ -5,7 +5,7 @@ usage: samp-server-cli.py [-h] [-a] [-b address] [--chatlogging] [-c cmd]
                           [-g3 name/path] [-g4 name/path] [-g5 name/path]
                           [-g6 name/path] [-g7 name/path] [-g8 name/path]
                           [-g9 name/path] [-t "My Game Mode"]
-                          [-n "My SA-MP server"] [-l] [--logqueries]
+                          [-n "My SA-MP server"] [-l] [-L] [--logqueries]
                           [--logtimeformat format] [-m name]
                           [--maxplayers number] [--maxnpc number] [-o]
                           [-P [password]] [-s path] [-d name/path] [-p number]
@@ -56,6 +56,8 @@ optional arguments:
   -n "My SA-MP server", --hostname "My SA-MP server"
                         set host name (shown in server browser)
   -l, --lanmode         enable LAN mode
+  -L, --local           run in current directory (same as if you pass "--
+                        workingdir .")
   --logqueries          enable logging of queries sent by players
   --logtimeformat format
                         set log timestamp format
