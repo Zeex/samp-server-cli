@@ -141,7 +141,7 @@ def run(options):
       exe = 'samp-server.exe'
     else:
       exe = 'samp03svr'
-    command = os.path.join(servdir, exe)
+    command = [os.path.join(servdir, exe)]
   del options['command']
 
   extra = options['extra']
