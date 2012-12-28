@@ -1,15 +1,15 @@
-usage: samp-server-cli.py [-h] [-a] [-b address] [--chatlogging]
-                          [-c cmd [args ...]] [-C filename] [-D ...]
-                          [-e name value [name value ...]] [-f name/path] -g
-                          name/path [-g1 name/path] [-g2 name/path]
-                          [-g3 name/path] [-g4 name/path] [-g5 name/path]
-                          [-g6 name/path] [-g7 name/path] [-g8 name/path]
-                          [-g9 name/path] [-t "My Game Mode"]
-                          [-n "My SA-MP server"] [-l] [-L] [--logqueries]
-                          [--logtimeformat format] [-m name]
-                          [--maxplayers number] [--maxnpc number] [-o]
-                          [-P [password]] [-s path] [-d name/path] [-p number]
-                          [-q] [-r] [-R password] [-T] [-u url] [-w path]
+usage: samp-server-cli [-h] [-a] [-b address] [--chatlogging]
+                       [-c cmd [args ...]] [-C filename] [-D ...]
+                       [-e name value [name value ...]] [-f name/path] -g
+                       name/path [-g1 name/path] [-g2 name/path]
+                       [-g3 name/path] [-g4 name/path] [-g5 name/path]
+                       [-g6 name/path] [-g7 name/path] [-g8 name/path]
+                       [-g9 name/path] [-t "My Game Mode"]
+                       [-n "My SA-MP server"] [-l] [-L] [--logqueries]
+                       [--logtimeformat format] [-m name]
+                       [--maxplayers number] [--maxnpc number] [-o]
+                       [-P [password]] [-s path] [-d name/path] [-p number]
+                       [-q] [-r] [-R password] [-T] [-u url] [-w path]
 
 A command line interface to SA:MP server
 
