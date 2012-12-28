@@ -56,7 +56,7 @@ def get_options():
   parser.add_argument('-t', '--gamemodetext', dest='gamemodetext', metavar='"My Game Mode"', help='set game mode text (shown in server browser)')
   parser.add_argument('-n', '--hostname', dest='hostname', metavar='"My SA-MP server"', help='set host name (shown in server browser)')
   parser.add_argument('-l', '--lanmode', dest='lanmode', action='store_const', const=1, default=0, help='enable LAN mode')
-  parser.add_argument('-L', '--local', dest='local', action='store_true', default=False, help='run in current directory (same as if you pass "--workingdir .")')
+  parser.add_argument('-L', '--local', dest='local', action='store_true', default=False, help='run in current directory (same as if you pass "--workdir .")')
   parser.add_argument('--logqueries', action='store_const', const=1, default=0, help='enable logging of queries sent by players')
   parser.add_argument('--logtimeformat', metavar='format', help='set log timestamp format')
   parser.add_argument('-m', '--mapname', dest='mapname', metavar='name', help='set map name (shown in server browser)')
@@ -72,7 +72,7 @@ def get_options():
   parser.add_argument('-R', '--rconpassword', dest='rcon_password', metavar='password', default=generate_password(), help='RCON admin password')
   parser.add_argument('-T', '--timestamp', dest='timestamp', action='store_const', const=1, default=0, help='show timestamps in log')
   parser.add_argument('-u', '--weburl', dest='weburl', metavar='url', help='website URL')
-  parser.add_argument('-w', '--workingdir', metavar='path', help='set working directory (server directory by default)')
+  parser.add_argument('-w', '--workdir', metavar='path', help='set working directory (server directory by default)')
 
   args = parser.parse_args(sys.argv[1:])
   return vars(args)
@@ -125,15 +125,15 @@ def run(options):
   local = options['local']
   del options['local']
 
-  working_dir = options['workingdir']
+  workdir = options['workdir']
   if local:
-    working_dir = os.getcwd()
+    workdir = os.getcwd()
   else:
-    if working_dir is None:
-      working_dir = server_dir
+    if workdir is None:
+      workdir = server_dir
     else:
-      quiet_mkdir(working_dir)
-  del options['workingdir']
+      quiet_mkdir(workdir)
+  del options['workdir']
 
   command = options['command']
   if command is None:
@@ -173,7 +173,7 @@ def run(options):
     dirs['gamemode%d' % i] = 'gamemodes'
 
   for name, dir in dirs.items():
-    dir = os.path.join(working_dir, dir)
+    dir = os.path.join(workdir, dir)
     values = options[name]
     if values is None:
       continue
@@ -199,12 +199,12 @@ def run(options):
     command = debugger % (debugger_args, command)
   del options['debug']
 
-  write_config(os.path.join(working_dir, 'server.cfg'), options)
+  write_config(os.path.join(workdir, 'server.cfg'), options)
 
-  quiet_mkdir(os.path.join(working_dir, 'gamemodes'))
-  quiet_mkdir(os.path.join(working_dir, 'filterscripts'))
+  quiet_mkdir(os.path.join(workdir, 'gamemodes'))
+  quiet_mkdir(os.path.join(workdir, 'filterscripts'))
 
-  os.chdir(working_dir)
+  os.chdir(workdir)
   try:
     return subprocess.call(command, shell=True)
   except KeyboardInterrupt:

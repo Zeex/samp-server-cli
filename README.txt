@@ -57,7 +57,7 @@ optional arguments:
                         set host name (shown in server browser)
   -l, --lanmode         enable LAN mode
   -L, --local           run in current directory (same as if you pass "--
-                        workingdir .")
+                        workdir .")
   --logqueries          enable logging of queries sent by players
   --logtimeformat format
                         set log timestamp format
@@ -83,5 +83,5 @@ optional arguments:
                         RCON admin password
   -T, --timestamp       show timestamps in log
   -u url, --weburl url  website URL
-  -w path, --workingdir path
+  -w path, --workdir path
                         set working directory (server directory by default)
