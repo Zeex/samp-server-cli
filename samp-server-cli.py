@@ -192,7 +192,11 @@ def run(options):
 
   debug = options['debug']
   if debug is not None:
-    command = 'gdb %s --args %s' % (debug, command)
+    debugger = os.environ.get('SAMP_SERVER_DEBUGGER')
+    if debugger is None:
+      debugger = 'gdb %s --args %s'
+    debugger_args = debug
+    command = debugger % (debugger_args, command)
   del options['debug']
 
   write_config(os.path.join(working_dir, 'server.cfg'), options)
