@@ -93,22 +93,20 @@ def is_linux():
 
 def read_config(filename):
   options = {}
-  file = open(filename, 'r')
-  for line in file.readlines():
-    try:
-      name, value = string.split(line.strip(), maxsplit=1)
-      options[name] = value
-    except ValueError:
-      continue
-  file.close()
+  with open(filename, 'r') as file:
+    for line in file.readlines():
+      try:
+        name, value = string.split(line.strip(), maxsplit=1)
+        options[name] = value
+      except ValueError:
+        continue
   return options
 
 def write_config(filename, options):
-  file = open(filename, 'w')
-  for name, value in options.items():
-    if value is not None:
-      file.write('%s %s\n' % (name, value))
-  file.close()
+  with open(filename, 'w') as file:
+    for name, value in options.items():
+      if value is not None:
+        file.write('%s %s\n' % (name, value))
 
 def group(n, iterable, padvalue=None):
     "group(3, 'abcdefg', 'x') --> ('a','b','c'), ('d','e','f'), ('g','x','x')"
