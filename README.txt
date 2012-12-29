@@ -78,7 +78,7 @@ optional arguments:
   -q, --query           allow querying server info from outside world (e.g.
                         server browser)
   -r, --rcon            enable RCON (Remote CONsole) access
-  -R password, --rconpassword password
+  -R password, --rcon-password password
                         RCON admin password
   -T, --timestamp       show timestamps in log
   -u url, --weburl url  website URL
