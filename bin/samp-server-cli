@@ -162,7 +162,7 @@ def get_options():
 
   argument('-u', '--weburl', dest='weburl',
            metavar='url',
-           help='website URL')
+           help='set contact website URL')
 
   argument('-w', '--workdir', dest='workdir',
            metavar='path',
