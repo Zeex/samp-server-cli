@@ -59,7 +59,7 @@ def get_options():
   argument('-n', '--hostname', dest='hostname', metavar='"My SA-MP server"', help='set host name (shown in server browser)')
   argument('-l', '--lanmode', dest='lanmode', action='store_const', const=1, default=0, help='enable LAN mode')
   argument('-L', '--local', dest='local', action='store_true', default=False, help='run in current directory (same as if you pass "--workdir .")')
-  argument('--logqueries', dest='logqueries', action='store_const', const=1, default=0, help='enable logging of queries sent to the server')
+  argument('-Q', '--logqueries', dest='logqueries', action='store_const', const=1, default=0, help='enable logging of queries sent to the server')
   argument('--logtimeformat', dest='logtimeformat', metavar='format', help='set log timestamp format')
   argument('-m', '--mapname', dest='mapname', metavar='name', help='set map name (shown in server browser)')
   argument('--maxplayers', dest='maxplayers', metavar='number', type=int, default=500, help='set max. number of players')

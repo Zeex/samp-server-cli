@@ -5,7 +5,7 @@ usage: samp-server-cli [-h] [-a] [-b address] [--chatlogging]
                        [-g3 name/path] [-g4 name/path] [-g5 name/path]
                        [-g6 name/path] [-g7 name/path] [-g8 name/path]
                        [-g9 name/path] [-t "My Game Mode"]
-                       [-n "My SA-MP server"] [-l] [-L] [--logqueries]
+                       [-n "My SA-MP server"] [-l] [-L] [-Q]
                        [--logtimeformat format] [-m name]
                        [--maxplayers number] [--maxnpc number] [-o]
                        [-P [password]] [-s path] [-d name/path] [-p number]
@@ -57,7 +57,7 @@ optional arguments:
   -l, --lanmode         enable LAN mode
   -L, --local           run in current directory (same as if you pass "--
                         workdir .")
-  --logqueries          enable logging of queries sent to the server
+  -Q, --logqueries      enable logging of queries sent to the server
   --logtimeformat format
                         set log timestamp format
   -m name, --mapname name
