@@ -164,6 +164,11 @@ def get_options():
            help='set directory of server executable (current directory by '
                 'default); not necesssary if you use -c')
 
+  argument('--sleep', dest='sleep',
+           metavar='ms',
+           help='set server tick time (amount of "sleep" time in internal'
+                'event loop)')
+
   argument('--stream-distance', dest='stream_distance',
            metavar='float',
            help='set stream distance')
