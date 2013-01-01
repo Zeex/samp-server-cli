@@ -4,13 +4,13 @@ usage: samp-server-cli [-h] [-a] [-b address] [--chatlogging]
                        name/path [-g1 name/path] [-g2 name/path]
                        [-g3 name/path] [-g4 name/path] [-g5 name/path]
                        [-g6 name/path] [-g7 name/path] [-g8 name/path]
-                       [-g9 name/path] [-t "My Game Mode"]
+                       [-g9 name/path] [--gamemodetext "My Game Mode"]
                        [-n "My SA-MP server"] [--incar-rate ms] [-l] [-L] [-Q]
                        [--logtimeformat format] [-m name] [--maxnpc number]
                        [--maxplayers number] [--onfoot-rate ms] [-o]
                        [-P [password]] [-d name/path] [-p number] [-q] [-r]
                        [-R password] [-s path] [--sleep ms]
-                       [--stream-distance float] [--stream-rate ms] [-T]
+                       [--stream-distance float] [--stream-rate ms] [-t]
                        [--weapon-rate ms] [-u url] [-w path]
 
 A command line interface to SA:MP server
@@ -52,7 +52,7 @@ optional arguments:
                         set game mode #8
   -g9 name/path, --gamemode9 name/path
                         set game mode #9
-  -t "My Game Mode", --gamemodetext "My Game Mode"
+  --gamemodetext "My Game Mode"
                         set game mode text (shown in server browser)
   -n "My SA-MP server", --hostname "My SA-MP server"
                         set host name (shown in server browser)
@@ -89,7 +89,7 @@ optional arguments:
   --stream-distance float
                         set stream distance
   --stream-rate ms      set stream rate
-  -T, --timestamp       show timestamps in log
+  -t, --timestamp       show timestamps in log
   --weapon-rate ms      set player data update rate while firing a weapon
   -u url, --weburl url  set contact website URL
   -w path, --workdir path

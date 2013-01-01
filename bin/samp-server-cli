@@ -86,7 +86,7 @@ def get_options():
              metavar='name/path',
              help='set game mode #%d' % i)
 
-  argument('-t', '--gamemodetext', dest='gamemodetext',
+  argument('--gamemodetext', dest='gamemodetext',
            metavar='"My Game Mode"',
            help='set game mode text (shown in server browser)')
 
@@ -177,7 +177,7 @@ def get_options():
            metavar='ms',
            help='set stream rate')
 
-  argument('-T', '--timestamp', dest='timestamp',
+  argument('-t', '--timestamp', dest='timestamp',
            action='store_const', const=1, default=0,
            help='show timestamps in log')
 
