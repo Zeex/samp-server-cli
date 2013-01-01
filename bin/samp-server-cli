@@ -126,6 +126,10 @@ def get_options():
            metavar='number', type=int, default=500,
            help='set max. number of players')
 
+  argument('--myriad', dest='myriad',
+           action='store_const', const=1, default=0,
+           help='??')
+
   argument('--onfoot-rate', dest='onfoot_rate',
            metavar='ms',
            help='set player data update rate while walking/running')

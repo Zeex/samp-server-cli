@@ -7,9 +7,9 @@ usage: samp-server-cli [-h] [-a] [-b address] [--chatlogging]
                        [-g9 name/path] [--gamemodetext "My Game Mode"]
                        [-n "My SA-MP server"] [--incar-rate ms] [-l] [-L] [-Q]
                        [--logtimeformat format] [-m name] [--maxnpc number]
-                       [--maxplayers number] [--onfoot-rate ms] [-o]
-                       [-P [password]] [-d name/path] [-p number] [-q] [-r]
-                       [-R password] [-s path] [--sleep ms]
+                       [--maxplayers number] [--myriad] [--onfoot-rate ms]
+                       [-o] [-P [password]] [-d name/path] [-p number] [-q]
+                       [-r] [-R password] [-s path] [--sleep ms]
                        [--stream-distance float] [--stream-rate ms] [-t]
                        [--weapon-rate ms] [-u url] [-w path]
 
@@ -67,6 +67,7 @@ optional arguments:
                         set map name (shown in server browser)
   --maxnpc number       set max. number of NPCs (bots)
   --maxplayers number   set max. number of players
+  --myriad              ??
   --onfoot-rate ms      set player data update rate while walking/running
   -o, --output          enable console output
   -P [password], --password [password]
