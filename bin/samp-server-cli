@@ -229,9 +229,6 @@ def group(n, iterable, padvalue=None):
     "group(3, 'abcdefg', 'x') --> ('a','b','c'), ('d','e','f'), ('g','x','x')"
     return itertools.izip_longest(*[iter(iterable)]*n, fillvalue=padvalue)
 
-def send_rcon_command(command):
-  pass
-
 def start_server(options):
   servdir = options['servdir']
   if servdir is None:
