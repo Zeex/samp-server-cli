@@ -5,11 +5,13 @@ usage: samp-server-cli [-h] [-a] [-b address] [--chatlogging]
                        [-g3 name/path] [-g4 name/path] [-g5 name/path]
                        [-g6 name/path] [-g7 name/path] [-g8 name/path]
                        [-g9 name/path] [-t "My Game Mode"]
-                       [-n "My SA-MP server"] [-l] [-L] [-Q]
-                       [--logtimeformat format] [-m name]
-                       [--maxplayers number] [--maxnpc number] [-o]
-                       [-P [password]] [-s path] [-d name/path] [-p number]
-                       [-q] [-r] [-R password] [-T] [-u url] [-w path]
+                       [-n "My SA-MP server"] [--incar-rate ms] [-l] [-L] [-Q]
+                       [--logtimeformat format] [-m name] [--maxnpc number]
+                       [--maxplayers number] [--onfoot-rate ms] [-o]
+                       [-P [password]] [-d name/path] [-p number] [-q] [-r]
+                       [-R password] [-s path] [--stream-distance float]
+                       [--stream-rate ms] [-T] [--weapon-rate ms] [-u url]
+                       [-w path]
 
 A command line interface to SA:MP server
 
@@ -54,6 +56,7 @@ optional arguments:
                         set game mode text (shown in server browser)
   -n "My SA-MP server", --hostname "My SA-MP server"
                         set host name (shown in server browser)
+  --incar-rate ms       set player data update rate while in a vehicle
   -l, --lanmode         enable LAN mode
   -L, --local           run in current directory (same as if you pass "--
                         workdir .")
@@ -62,14 +65,12 @@ optional arguments:
                         set log timestamp format
   -m name, --mapname name
                         set map name (shown in server browser)
-  --maxplayers number   set max. number of players
   --maxnpc number       set max. number of NPCs (bots)
+  --maxplayers number   set max. number of players
+  --onfoot-rate ms      set player data update rate while walking/running
   -o, --output          enable console output
   -P [password], --password [password]
                         server password
-  -s path, --servdir path
-                        set directory of server executable (current directory
-                        by default); not necesssary if you use -c
   -d name/path, --plugin name/path
                         add plugin; multiple occurences of this option are
                         allowed
@@ -80,7 +81,14 @@ optional arguments:
   -r, --rcon            enable RCON (Remote CONsole) access
   -R password, --rcon-password password
                         RCON admin password
+  -s path, --servdir path
+                        set directory of server executable (current directory
+                        by default); not necesssary if you use -c
+  --stream-distance float
+                        set stream distance
+  --stream-rate ms      set stream rate
   -T, --timestamp       show timestamps in log
-  -u url, --weburl url  website URL
+  --weapon-rate ms      set player data update rate while firing a weapon
+  -u url, --weburl url  set contact website URL
   -w path, --workdir path
                         set working directory (server directory by default)
