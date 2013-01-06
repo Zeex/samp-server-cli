@@ -54,7 +54,7 @@ def get_options():
 
   argument('--chatlogging', dest='chatlogging',
            action='store_const', const=1, default=0,
-           help='enable chat logging')
+           help='enable logging of in-game chat')
 
   argument('-c', '--command', dest='command',
            nargs='+', metavar=('cmd', 'args'),
@@ -63,19 +63,19 @@ def get_options():
 
   argument('-C', '--config', dest='config',
            metavar='filename',
-           help='copy options from file')
+           help='load options from file (similar to "exec" command)')
 
   argument('-D', '--debug', dest='debug',
            nargs=argparse.REMAINDER,
-           help='run under debugger')
+           help='run server under debugger')
 
   argument('-e', '--extra', dest='extra',
            nargs='+', metavar='name value', 
-           help='write additional options (order may change)')
+           help='additional server.cfg options (order may change)')
 
   argument('-f', '--filterscript', dest='filterscripts',
            metavar='name/path', action='append',
-           help='add filter script; multiple occurences of this option are '
+           help='add a filter script; multiple occurences of this option are '
                 'allowed')
 
   argument('-g', '-g0', '--gamemode', '--gamemode0', dest='gamemode0',
@@ -141,19 +141,19 @@ def get_options():
 
   argument('-o', '--output', dest='output',
            action='store_const', const=1, default=0,
-           help='enable console output')
+           help='enable console output (Linux only)')
 
   argument('-P', '--password', dest='password',
            nargs='?', metavar='password', const=generate_password(),
-           help='server password')
+           help='set server password')
 
   argument('-d', '--plugin', dest='plugins',
            metavar='name/path', action='append',
-           help='add plugin; multiple occurences of this option are allowed')
+           help='add a plugin; multiple occurences of this option are allowed')
 
   argument('-p', '--port', dest='port',
            metavar='number', type=int, default=7777,
-           help='set server port')
+           help='set server listen port')
   
   argument('-q', '--query', dest='query',
            action='store_const', const=1, default=0,
@@ -162,21 +162,20 @@ def get_options():
 
   argument('-r', '--rcon', dest='rcon',
            action='store_const', const=1, default=0,
-           help='enable RCON (Remote CONsole) access')
+           help='enable RCON (Remote CONsole)')
 
   argument('-R', '--rcon-password', dest='rcon_password',
            metavar='password', default=generate_password(),
-           help='RCON admin password')
+           help='set RCON password')
 
   argument('-s', '--servdir', dest='servdir',
            metavar='path',
-           help='set directory of server executable (current directory by '
-                'default); not necesssary if you use -c')
+           help='set server\'s root directory (current directory by default); '
+                'not necesssary if you use -c')
 
   argument('--sleep', dest='sleep',
            metavar='ms',
-           help='set server tick time (amount of "sleep" time in internal'
-                'event loop)')
+           help='set server sleep time')
 
   argument('--stream-distance', dest='stream_distance',
            metavar='float',
@@ -188,10 +187,10 @@ def get_options():
 
   argument('-t', '--timestamp', dest='timestamp',
            action='store_const', const=1, default=0,
-           help='show timestamps in log')
+           help='enable timestamps in log')
 
   argument('-T', '--timeout', dest='timeout',
-           metavar='seconds', type=float,
+           metavar='sec', type=float,
            help='limit server run time')
 
   argument('--weapon-rate', dest='weapon_rate',

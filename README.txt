@@ -11,7 +11,7 @@ usage: samp-server-cli [-h] [-a] [-b address] [--chatlogging]
                        [--onfoot-rate ms] [-o] [-P [password]] [-d name/path]
                        [-p number] [-q] [-r] [-R password] [-s path]
                        [--sleep ms] [--stream-distance float]
-                       [--stream-rate ms] [-t] [-T seconds] [--weapon-rate ms]
+                       [--stream-rate ms] [-t] [-T sec] [--weapon-rate ms]
                        [-u url] [-w path]
 
 A command line interface to SA:MP server
@@ -21,18 +21,18 @@ optional arguments:
   -a, --announce        announce to server masterlist
   -b address, --bind address
                         bind to specific IP address
-  --chatlogging         enable chat logging
+  --chatlogging         enable logging of in-game chat
   -c cmd [args ...], --command cmd [args ...]
                         override server startup command (path to server
                         executable by default)
   -C filename, --config filename
-                        copy options from file
-  -D ..., --debug ...   run under debugger
+                        load options from file (similar to "exec" command)
+  -D ..., --debug ...   run server under debugger
   -e name value [name value ...], --extra name value [name value ...]
-                        write additional options (order may change)
+                        additional server.cfg options (order may change)
   -f name/path, --filterscript name/path
-                        add filter script; multiple occurences of this option
-                        are allowed
+                        add a filter script; multiple occurences of this
+                        option are allowed
   -g name/path, -g0 name/path, --gamemode name/path, --gamemode0 name/path
                         set startup game mode (mode #0)
   -g1 name/path, --gamemode1 name/path
@@ -71,29 +71,28 @@ optional arguments:
   --myriad              ??
   --nosign              ??
   --onfoot-rate ms      set player data update rate while walking/running
-  -o, --output          enable console output
+  -o, --output          enable console output (Linux only)
   -P [password], --password [password]
-                        server password
+                        set server password
   -d name/path, --plugin name/path
-                        add plugin; multiple occurences of this option are
+                        add a plugin; multiple occurences of this option are
                         allowed
   -p number, --port number
-                        set server port
+                        set server listen port
   -q, --query           allow querying server info from outside world (e.g.
                         server browser)
-  -r, --rcon            enable RCON (Remote CONsole) access
+  -r, --rcon            enable RCON (Remote CONsole)
   -R password, --rcon-password password
-                        RCON admin password
+                        set RCON password
   -s path, --servdir path
-                        set directory of server executable (current directory
-                        by default); not necesssary if you use -c
-  --sleep ms            set server tick time (amount of "sleep" time in
-                        internalevent loop)
+                        set server's root directory (current directory by
+                        default); not necesssary if you use -c
+  --sleep ms            set server sleep time
   --stream-distance float
                         set stream distance
   --stream-rate ms      set stream rate
-  -t, --timestamp       show timestamps in log
-  -T seconds, --timeout seconds
+  -t, --timestamp       enable timestamps in log
+  -T sec, --timeout sec
                         limit server run time
   --weapon-rate ms      set player data update rate while firing a weapon
   -u url, --weburl url  set contact website URL
