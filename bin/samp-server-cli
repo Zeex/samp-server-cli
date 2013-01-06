@@ -209,10 +209,6 @@ def get_options():
   args = parser.parse_args(sys.argv[1:])
   return vars(args)
 
-def quiet_mkdir(path):
-  if not os.path.exists(path):
-    os.mkdir(path)
-
 def is_windows():
   system = platform.system()
   return system == 'Windows' or system.startswith('CYGWIN_NT')
@@ -262,7 +258,8 @@ def start_server(options):
     if workdir is None:
       workdir = servdir
     else:
-      quiet_mkdir(workdir)
+      if not os.path.exists(workdir):
+        os.mkdir(workdir)
   del options['workdir']
 
   command = options['command']
@@ -306,6 +303,8 @@ def start_server(options):
 
   for name, dir in dirs.items():
     dir = os.path.join(workdir, dir)
+    if not os.path.exists(dir):
+      os.mkdir(dir)
     values = options[name]
     if values is None:
       continue
@@ -330,11 +329,8 @@ def start_server(options):
   timeout = options['timeout']
   del options['timeout']
 
-  write_config(os.path.join(workdir, 'server.cfg'), options)
-
-  quiet_mkdir(os.path.join(workdir, 'gamemodes'))
-  quiet_mkdir(os.path.join(workdir, 'filterscripts'))
-  quiet_mkdir(os.path.join(workdir, 'plugins'))
+  server_cfg = os.path.join(workdir, 'server.cfg')
+  write_config(server_cfg, options)
 
   os.chdir(workdir)
   try:
