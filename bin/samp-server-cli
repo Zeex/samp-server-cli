@@ -340,6 +340,7 @@ def start_server(options):
     else:
       while server.poll() is None:
         time.sleep(100)
+    server.terminate()
     sys.exit(server.returncode)
   except KeyboardInterrupt:
     sys.exit(0)
