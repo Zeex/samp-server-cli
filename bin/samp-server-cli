@@ -61,15 +61,15 @@ def get_options():
            help='override server startup command (path to server executable '
                 'by default)')
 
-  argument('-C', '--config', dest='config',
-           metavar='filename',
-           help='load options from file (similar to "exec" command)')
-
   argument('-D', '--debug', dest='debug',
            nargs=argparse.REMAINDER,
            help='run server under debugger')
 
-  argument('-e', '--extra', dest='extra',
+  argument('-e', '--exec', dest='exec',
+           metavar='filename',
+           help='load options from file')
+
+  argument('-E', '--extra', dest='extra',
            nargs='+', metavar='name value', 
            help='additional server.cfg options (order may change)')
 
@@ -278,11 +278,11 @@ def start_server(options):
     options.update(extra_options)
   del options['extra']
 
-  config = options['config']
-  if config is not None:
-    config_options = read_config(config)
-    options.update(config_options)
-  del options['config']
+  exec_file = options['exec']
+  if exec_file is not None:
+    exec_options = read_config(exec_file)
+    options.update(exec_options)
+  del options['exec']
 
   plugins = options['plugins'] 
   if plugins is not None:

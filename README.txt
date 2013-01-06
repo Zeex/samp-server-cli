@@ -1,6 +1,6 @@
 usage: samp-server-cli [-h] [-a] [-b address] [--chatlogging]
-                       [-c cmd [args ...]] [-C filename] [-D ...]
-                       [-e name value [name value ...]] [-f name/path] -g
+                       [-c cmd [args ...]] [-D ...] [-e filename]
+                       [-E name value [name value ...]] [-f name/path] -g
                        name/path [-g1 name/path] [-g2 name/path]
                        [-g3 name/path] [-g4 name/path] [-g5 name/path]
                        [-g6 name/path] [-g7 name/path] [-g8 name/path]
@@ -25,10 +25,10 @@ optional arguments:
   -c cmd [args ...], --command cmd [args ...]
                         override server startup command (path to server
                         executable by default)
-  -C filename, --config filename
-                        load options from file (similar to "exec" command)
   -D ..., --debug ...   run server under debugger
-  -e name value [name value ...], --extra name value [name value ...]
+  -e filename, --exec filename
+                        load options from file
+  -E name value [name value ...], --extra name value [name value ...]
                         additional server.cfg options (order may change)
   -f name/path, --filterscript name/path
                         add a filter script; multiple occurences of this
