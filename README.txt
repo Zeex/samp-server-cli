@@ -11,8 +11,8 @@ usage: samp-server-cli [-h] [-a] [-b address] [--chatlogging]
                        [--onfoot-rate ms] [-o] [-P [password]] [-d name/path]
                        [-p number] [-q] [-r] [-R password] [-s path]
                        [--sleep ms] [--stream-distance float]
-                       [--stream-rate ms] [-t] [--weapon-rate ms] [-u url]
-                       [-w path]
+                       [--stream-rate ms] [-t] [-T seconds] [--weapon-rate ms]
+                       [-u url] [-w path]
 
 A command line interface to SA:MP server
 
@@ -93,6 +93,8 @@ optional arguments:
                         set stream distance
   --stream-rate ms      set stream rate
   -t, --timestamp       show timestamps in log
+  -T seconds, --timeout seconds
+                        limit server run time
   --weapon-rate ms      set player data update rate while firing a weapon
   -u url, --weburl url  set contact website URL
   -w path, --workdir path
