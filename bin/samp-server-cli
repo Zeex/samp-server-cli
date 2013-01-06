@@ -32,6 +32,7 @@ import random
 import string
 import subprocess
 import sys
+import time
 
 def generate_password(size=10, chars=string.ascii_letters + string.digits):
   return ''.join(random.choice(chars) for x in range(size))
@@ -189,6 +190,10 @@ def get_options():
            action='store_const', const=1, default=0,
            help='show timestamps in log')
 
+  argument('-T', '--timeout', dest='timeout',
+           metavar='seconds', type=float,
+           help='limit server run time')
+
   argument('--weapon-rate', dest='weapon_rate',
            metavar='ms',
            help='set player data update rate while firing a weapon')
@@ -322,6 +327,9 @@ def start_server(options):
     command = ['gdb'] + debug + ['--args'] + command
   del options['debug']
 
+  timeout = options['timeout']
+  del options['timeout']
+
   write_config(os.path.join(workdir, 'server.cfg'), options)
 
   quiet_mkdir(os.path.join(workdir, 'gamemodes'))
@@ -330,9 +338,15 @@ def start_server(options):
 
   os.chdir(workdir)
   try:
-    return subprocess.call(command)
+    server = subprocess.Popen(command)
+    if timeout is not None:
+      time.sleep(timeout)
+    else:
+      while server.poll() is None:
+        time.sleep(100)
+    sys.exit(server.returncode)
   except KeyboardInterrupt:
-    return 0
+    sys.exit(0)
 
 if __name__ == '__main__':
-  sys.exit(start_server(get_options()))
+  start_server(get_options())
