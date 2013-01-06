@@ -336,10 +336,9 @@ def start_server(options):
     server = subprocess.Popen(command)
     if timeout is not None:
       time.sleep(timeout)
+      server.terminate()
     else:
-      while server.poll() is None:
-        time.sleep(100)
-    server.terminate()
+      server.wait()
     sys.exit(server.returncode)
   except KeyboardInterrupt:
     sys.exit(0)
