@@ -326,6 +326,7 @@ def start_server(options):
 
   quiet_mkdir(os.path.join(workdir, 'gamemodes'))
   quiet_mkdir(os.path.join(workdir, 'filterscripts'))
+  quiet_mkdir(os.path.join(workdir, 'plugins'))
 
   os.chdir(workdir)
   try:
