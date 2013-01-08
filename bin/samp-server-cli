@@ -237,7 +237,9 @@ def group(n, iterable, padvalue=None):
     "group(3, 'abcdefg', 'x') --> ('a','b','c'), ('d','e','f'), ('g','x','x')"
     return itertools.izip_longest(*[iter(iterable)]*n, fillvalue=padvalue)
 
-def start_server(options):
+def main():
+  options = get_options()
+
   servdir = options['servdir']
   if servdir is None:
     servdir = os.environ.get('SAMP_SERVER_ROOT')
@@ -346,4 +348,4 @@ def start_server(options):
     sys.exit(0)
 
 if __name__ == '__main__':
-  start_server(get_options())
+  main()
