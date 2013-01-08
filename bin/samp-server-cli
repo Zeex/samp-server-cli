@@ -32,7 +32,7 @@ import random
 import string
 import subprocess
 import sys
-import time
+import threading
 
 def generate_password(size=10, chars=string.ascii_letters + string.digits):
   return ''.join(random.choice(chars) for x in range(size))
@@ -335,8 +335,10 @@ def start_server(options):
   try:
     server = subprocess.Popen(command)
     if timeout is not None:
-      time.sleep(timeout)
-      server.terminate()
+      term_timer = threading.Timer(timeout, server.terminate)
+      term_timer.start()
+      server.wait()
+      term_timer.cancel()
     else:
       server.wait()
     sys.exit(server.returncode)
