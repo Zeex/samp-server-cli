@@ -37,7 +37,7 @@ import threading
 def generate_password(size=10, chars=string.ascii_letters + string.digits):
   return ''.join(random.choice(chars) for x in range(size))
 
-def get_options():
+def get_options(args):
   parser = argparse.ArgumentParser(
     description='A command line interface to SA:MP server',
     fromfile_prefix_chars='@',
@@ -205,8 +205,7 @@ def get_options():
            metavar='path',
            help='set working directory (server directory by default)')
 
-  args = parser.parse_args(sys.argv[1:])
-  return vars(args)
+  return vars(parser.parse_args(args))
 
 def is_windows():
   system = platform.system()
@@ -237,8 +236,8 @@ def group(n, iterable, padvalue=None):
     "group(3, 'abcdefg', 'x') --> ('a','b','c'), ('d','e','f'), ('g','x','x')"
     return itertools.izip_longest(*[iter(iterable)]*n, fillvalue=padvalue)
 
-def main():
-  options = get_options()
+def main(argv):
+  options = get_options(argv[1:])
 
   servdir = options['servdir']
   if servdir is None:
@@ -348,4 +347,4 @@ def main():
     sys.exit(0)
 
 if __name__ == '__main__':
-  main()
+  main(sys.argv)
