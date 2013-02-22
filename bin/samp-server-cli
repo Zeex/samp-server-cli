@@ -134,6 +134,10 @@ def get_options(args):
   argument('--nosign', dest='nosign',
            action='store_const', const=1, default=0,
            help='??')
+           
+  argument('--no-launch', dest='no_launch',
+           action='store_const', const=True, default=False,
+           help='don\'t launch the server, just write server.cfg')
 
   argument('--onfoot-rate', dest='onfoot_rate',
            metavar='ms',
@@ -332,19 +336,23 @@ def main(argv):
   server_cfg = os.path.join(workdir, 'server.cfg')
   write_config(server_cfg, options)
 
-  os.chdir(workdir)
-  try:
-    server = subprocess.Popen(command)
-    if timeout is not None:
-      term_timer = threading.Timer(timeout, server.terminate)
-      term_timer.start()
-      server.wait()
-      term_timer.cancel()
-    else:
-      server.wait()
-    sys.exit(server.returncode)
-  except KeyboardInterrupt:
-    sys.exit(0)
+  no_launch = options['no_launch']
+  del options['no_launch']
+  
+  if not no_launch:
+    os.chdir(workdir)
+    try:
+      server = subprocess.Popen(command)
+      if timeout is not None:
+        term_timer = threading.Timer(timeout, server.terminate)
+        term_timer.start()
+        server.wait()
+        term_timer.cancel()
+      else:
+        server.wait()
+      sys.exit(server.returncode)
+    except KeyboardInterrupt:
+      sys.exit(0)
 
 if __name__ == '__main__':
   main(sys.argv)
