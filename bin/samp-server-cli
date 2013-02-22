@@ -243,30 +243,26 @@ def group(n, iterable, padvalue=None):
 def main(argv):
   options = parse_options(argv[1:])
 
-  servdir = options['servdir']
+  servdir = options.pop('servdir')
   if servdir is None:
     servdir = os.environ.get('SAMP_SERVER_ROOT')
     if servdir is None:
       servdir = os.getcwd()
   if not os.path.isabs(servdir):
     servdir = os.path.abspath(servdir)
-  del options['servdir']
 
-  local = options['local']
-  del options['local']
-
-  workdir = options['workdir']
+  local = options.pop('local')
   if local:
     workdir = os.getcwd()
   else:
+    workdir = options.pop('workdir')
     if workdir is None:
       workdir = servdir
     else:
       if not os.path.exists(workdir):
         os.mkdir(workdir)
-  del options['workdir']
 
-  command = options['command']
+  command = options.pop('command')
   if command is None:
     exe = os.environ.get('SAMP_SERVER')
     if exe is None:
@@ -275,19 +271,16 @@ def main(argv):
       else:
         exe = 'samp03svr'
     command = [os.path.join(servdir, exe)]
-  del options['command']
 
-  extra = options['extra']
+  extra = options.pop('extra')
   if extra is not None:
     extra_options = dict(group(2, extra))
     options.update(extra_options)
-  del options['extra']
 
-  exec_file = options['exec']
+  exec_file = options.pop('exec')
   if exec_file is not None:
     exec_options = read_config(exec_file)
     options.update(exec_options)
-  del options['exec']
 
   plugins = options['plugins'] 
   if plugins is not None:
@@ -325,23 +318,19 @@ def main(argv):
           values[i] = os.path.relpath(v, dir)
       options[name] = '%s' % ' '.join(values)
 
-  debug = options['debug']
+  debug = options.pop('debug')
   if debug is not None:
     command = ['gdb'] + debug + ['--args'] + command
-  del options['debug']
 
-  timeout = options['timeout']
-  del options['timeout']
-
+  no_launch = options.pop('no_launch')
+    
   server_cfg = os.path.join(workdir, 'server.cfg')
   write_config(server_cfg, options)
-
-  no_launch = options['no_launch']
-  del options['no_launch']
   
   if not no_launch:
     os.chdir(workdir)
     try:
+      timeout = options.pop('timeout')
       server = subprocess.Popen(command)
       if timeout is not None:
         term_timer = threading.Timer(timeout, server.terminate)
