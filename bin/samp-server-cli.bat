@@ -1,2 +1,2 @@
-@python %~dp0\samp-server-cli %*%
+@python %~dp0\samp-server-cli.py %*%
 
