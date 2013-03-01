@@ -1,0 +1,5 @@
+README.txt              text eol=lf
+bin/samp-server-cli     text eol=lf
+bin/samp-server-cli.py  text eol=lf
+bin/samp-server-cli.bat text eol=crlf
+bin/samp-server-cli.ps1 text eol=crlf
