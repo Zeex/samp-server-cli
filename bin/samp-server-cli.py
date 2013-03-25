@@ -227,14 +227,19 @@ def read_config(filename):
         name, value = string.split(line.strip(), maxsplit=1)
         options[name] = value
       except ValueError:
-        continue
+        name = line.strip()
+        if len(name) > 0:
+          options[name] = ''
   return options
 
 def write_config(filename, options):
   with open(filename, 'w') as file:
     for name, value in options.items():
       if value is not None:
-        file.write('%s %s\n' % (name, value))
+        if len(str(value)) > 0:
+          file.write('%s %s\n' % (name, value))
+        else:
+          file.write('%s\n' % name)
 
 def group(n, iterable, padvalue=None):
     "group(3, 'abcdefg', 'x') --> ('a','b','c'), ('d','e','f'), ('g','x','x')"
