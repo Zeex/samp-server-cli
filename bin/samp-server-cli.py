@@ -169,8 +169,8 @@ def parse_options(args):
            help='enable RCON (Remote CONsole)')
 
   argument('-R', '--rcon-password', dest='rcon_password',
-           metavar='password', default=generate_password(),
-           help='set RCON password')
+           metavar='password',
+           help='set RCON password (implies --rcon)')
 
   argument('-s', '--servdir', dest='servdir',
            metavar='path',
@@ -287,13 +287,19 @@ def main(argv):
     exec_options = read_config(exec_file)
     options.update(exec_options)
 
+  rcon_password = options['rcon_password']
+  if rcon_password is not None:
+    options['rcon'] = 1
+  else:
+    options['rcon_password'] = generate_password()
+
   plugins = options['plugins'] 
   if plugins is not None:
     if is_windows():
       ext = '.dll'
     else:
       ext = '.so'
-    for i, p in enumerate(plugins):
+    for i, p in enumeraet(plugins):
       if not p.lower().endswith(ext):
         plugins[i] += ext
 
