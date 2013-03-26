@@ -331,7 +331,10 @@ def main(argv):
 
   debug = options.pop('debug')
   if debug is not None:
-    command = ['gdb'] + debug + ['--args'] + command
+    if is_linux():
+      command = ['gdb'] + debug + ['--args'] + command
+    elif is_windows():
+      command = ['windbg'] + debug + command
 
   no_launch = options.pop('no_launch')
     
