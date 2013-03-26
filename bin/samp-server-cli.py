@@ -299,7 +299,7 @@ def main(argv):
       ext = '.dll'
     else:
       ext = '.so'
-    for i, p in enumeraet(plugins):
+    for i, p in enumerate(plugins):
       if not p.lower().endswith(ext):
         plugins[i] += ext
 
