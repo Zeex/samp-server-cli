@@ -34,6 +34,11 @@ import subprocess
 import sys
 import threading
 
+try:
+  from itertools import izip_longest
+except ImportError:
+  from itertools import zip_longest as izip_longest
+
 def generate_password(size=10, chars=string.ascii_letters + string.digits):
   return ''.join(random.choice(chars) for x in range(size))
 
@@ -242,8 +247,11 @@ def write_config(filename, options):
           file.write('%s\n' % name)
 
 def group(n, iterable, padvalue=None):
-    "group(3, 'abcdefg', 'x') --> ('a','b','c'), ('d','e','f'), ('g','x','x')"
-    return itertools.izip_longest(*[iter(iterable)]*n, fillvalue=padvalue)
+  """
+    group(3, 'abcdefg', 'x')
+     --> ('a','b','c'), ('d','e','f'), ('g','x','x')"
+  """
+  return izip_longest(*[iter(iterable)]*n, fillvalue=padvalue)
 
 def main(argv):
   options = parse_options(argv[1:])
