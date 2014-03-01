@@ -342,7 +342,7 @@ def main(argv):
     if is_linux():
       command = ['gdb'] + debug + ['--args'] + command
     elif is_windows():
-      command = ['windbg'] + debug + command
+      command = ['ollydbg'] + debug + command
 
   no_launch = options.pop('no_launch')
     
