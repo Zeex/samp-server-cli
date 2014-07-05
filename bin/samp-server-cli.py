@@ -84,7 +84,7 @@ def parse_options(args):
                 'allowed')
 
   argument('-g', '-g0', '--gamemode', '--gamemode0', dest='gamemode0',
-           metavar='name/path', required=True,
+           metavar='name/path', default='bare',
            help='set startup game mode (mode #0)')
 
   for i in range(1, 10):
