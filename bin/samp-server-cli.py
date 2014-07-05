@@ -75,7 +75,7 @@ def parse_options(args):
            help='load options from file')
 
   argument('-E', '--extra', dest='extra',
-           nargs='+', metavar='name value', 
+           nargs='+', metavar='name value',
            help='additional server.cfg options (order may change)')
 
   argument('-f', '--filterscript', dest='filterscripts',
@@ -139,7 +139,7 @@ def parse_options(args):
   argument('--nosign', dest='nosign',
            action='store_const', const=1, default=0,
            help='??')
-           
+
   argument('--no-launch', dest='no_launch',
            action='store_const', const=True, default=False,
            help='don\'t launch the server, just write server.cfg')
@@ -163,7 +163,7 @@ def parse_options(args):
   argument('-p', '--port', dest='port',
            metavar='number', type=int, default=7777,
            help='set server listen port')
-  
+
   argument('-q', '--query', dest='query',
            action='store_const', const=1, default=0,
            help='allow querying server info from outside world (e.g. server '
@@ -215,7 +215,7 @@ def parse_options(args):
            help='set working directory (server directory by default)')
 
   return vars(parser.parse_args(args))
-  
+
 def is_windows():
   system = platform.system()
   return system == 'Windows' or system.startswith('CYGWIN_NT')
@@ -301,7 +301,7 @@ def main(argv):
   else:
     options['rcon_password'] = generate_password()
 
-  plugins = options['plugins'] 
+  plugins = options['plugins']
   if plugins is not None:
     if is_windows():
       ext = '.dll'
@@ -345,10 +345,10 @@ def main(argv):
       command = ['ollydbg'] + debug + command
 
   no_launch = options.pop('no_launch')
-    
+
   server_cfg = os.path.join(workdir, 'server.cfg')
   write_config(server_cfg, options)
-  
+
   if not no_launch:
     os.chdir(workdir)
     try:
