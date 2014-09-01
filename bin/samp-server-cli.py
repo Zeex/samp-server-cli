@@ -141,8 +141,12 @@ def parse_options(args):
            help='??')
 
   argument('--no-launch', dest='no_launch',
-           action='store_const', const=True, default=False,
+           action='store_true', default=False,
            help='don\'t launch the server, just write server.cfg')
+
+  argument('--no-config', dest='no_config',
+           action='store_true', default=False,
+           help='don\'t write server.cfg, just launch the server')
 
   argument('--onfoot-rate', dest='onfoot_rate',
            metavar='ms',
@@ -344,10 +348,12 @@ def main(argv):
     elif is_windows():
       command = ['ollydbg'] + debug + command
 
+  no_config = options.pop('no_config')
   no_launch = options.pop('no_launch')
 
-  server_cfg = os.path.join(workdir, 'server.cfg')
-  write_config(server_cfg, options)
+  if not no_config:
+    server_cfg = os.path.join(workdir, 'server.cfg')
+    write_config(server_cfg, options)
 
   if not no_launch:
     os.chdir(workdir)
