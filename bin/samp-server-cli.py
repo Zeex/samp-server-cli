@@ -70,10 +70,6 @@ def parse_options(args):
            nargs=argparse.REMAINDER,
            help='run server under debugger')
 
-  argument('-e', '--exec', dest='exec',
-           metavar='filename',
-           help='load options from file')
-
   argument('-E', '--extra', dest='extra',
            nargs='+', metavar='name value',
            help='additional server.cfg options (order may change)')
@@ -293,11 +289,6 @@ def main(argv):
   if extra is not None:
     extra_options = dict(group(2, extra))
     options.update(extra_options)
-
-  exec_file = options.pop('exec')
-  if exec_file is not None:
-    exec_options = read_config(exec_file)
-    options.update(exec_options)
 
   rcon_password = options['rcon_password']
   if rcon_password is not None:

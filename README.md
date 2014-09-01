@@ -54,12 +54,6 @@ Using existing server.cfg file:
 samp-server-cli --no-config
 ```
 
-Using parts of existing server.cfg:
-
-```
-samp-server-cli -e C:\samp-server\server.cfg
-```
-
 Reading command line arguments from a file:
 
 ```
