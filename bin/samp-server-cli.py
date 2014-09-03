@@ -70,7 +70,7 @@ def parse_options(args):
            nargs=argparse.REMAINDER,
            help='run server under debugger')
 
-  argument('-E', '--extra', dest='extra',
+  argument('-e', '--extra', dest='extra',
            nargs='+', metavar='name value',
            help='additional server.cfg options (order may change)')
 
