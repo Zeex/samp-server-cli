@@ -70,14 +70,15 @@ def parse_options(args):
            nargs=argparse.REMAINDER,
            help='run server under debugger')
 
-  argument('-e', '--extra', dest='extra',
-           nargs='+', metavar='name value',
-           help='additional server.cfg options (order may change)')
+  argument('-e', '--extra', dest='extra_settings',
+           nargs='+', metavar=('name', 'value'), action='append',
+           help='add an additional server.cfg setting; '
+                'multiple occurences of this option are allowed')
 
   argument('-f', '--filterscript', dest='filterscripts',
            metavar='name/path', action='append',
-           help='add a filter script; multiple occurences of this option are '
-                'allowed')
+           help='add a filter script; '
+                'multiple occurences of this option are allowed')
 
   argument('-g', '-g0', '--gamemode', '--gamemode0', dest='gamemode0',
            metavar='name/path', default='bare',
@@ -158,7 +159,8 @@ def parse_options(args):
 
   argument('-d', '--plugin', dest='plugins',
            metavar='name/path', action='append',
-           help='add a plugin; multiple occurences of this option are allowed')
+           help='add a plugin; '
+                'multiple occurences of this option are allowed')
 
   argument('-p', '--port', dest='port',
            metavar='number', type=int, default=7777,
@@ -246,13 +248,6 @@ def write_config(filename, options):
         else:
           file.write('%s\n' % name)
 
-def group(n, iterable, padvalue=None):
-  """
-    group(3, 'abcdefg', 'x')
-     --> ('a','b','c'), ('d','e','f'), ('g','x','x')"
-  """
-  return izip_longest(*[iter(iterable)]*n, fillvalue=padvalue)
-
 def main(argv):
   options = parse_options(argv[1:])
 
@@ -285,10 +280,11 @@ def main(argv):
         exe = 'samp03svr'
     command = [os.path.join(servdir, exe)]
 
-  extra = options.pop('extra')
-  if extra is not None:
-    extra_options = dict(group(2, extra))
-    options.update(extra_options)
+  extra_settings = options.pop('extra_settings')
+  if extra_settings is not None:
+    for s in extra_settings:
+      head, *tail = s
+      options[head] = ' '.join(tail)
 
   rcon_password = options['rcon_password']
   if rcon_password is not None:
