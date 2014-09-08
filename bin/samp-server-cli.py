@@ -283,7 +283,7 @@ def main(argv):
   extra_settings = options.pop('extra_settings')
   if extra_settings is not None:
     for s in extra_settings:
-      head, *tail = s
+      head, tail = s[0], s[1:]
       options[head] = ' '.join(tail)
 
   rcon_password = options['rcon_password']
