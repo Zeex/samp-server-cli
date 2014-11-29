@@ -252,6 +252,11 @@ def write_config(filename, options):
         else:
           file.write('%s\n' % name)
 
+def convert_path(path, dir):
+  if os.path.isabs(path) or path.startswith('.'):
+    return os.path.relpath(path, dir)
+  return path
+
 def main(argv):
   options = parse_options(argv[1:])
 
@@ -323,13 +328,7 @@ def main(argv):
       values = [values]
     if values is not None:
       for i, v in enumerate(values):
-        if not os.path.isabs(v) and not v.startswith('.'):
-          # If this is a relative path that does not start with a '.' leave it
-          # as is. This is how you typically write script names in server.cfg.
-          continue
-        else:
-          # Otherwise make it relative to the corresponding directory.
-          values[i] = os.path.relpath(v, dir)
+        values[i] = convert_path(v, dir)
       options[name] = '%s' % ' '.join(values)
 
   debug = options.pop('debug')
@@ -341,7 +340,7 @@ def main(argv):
 
   config = options.pop('config')
   if config is not None:
-    shutil.copy(os.path.join(workdir, config),
+    shutil.copy(os.path.join(workdir, convert_path(config, workdir)),
                 os.path.join(workdir, 'server.cfg'))
 
   no_config = options.pop('no_config')
