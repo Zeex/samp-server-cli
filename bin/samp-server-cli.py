@@ -55,7 +55,8 @@ def parse_options(args):
            action='store_const', const=1, default=0,
            help='announce to server masterlist')
 
-  argument('-b', '--bind', dest='bind', metavar='address',
+  argument('-b', '--bind', dest='bind',
+           metavar='address',
            help='bind to specific IP address')
 
   argument('--chatlogging', dest='chatlogging',
@@ -67,7 +68,8 @@ def parse_options(args):
            help='override server startup command (path to server executable '
                 'by default)')
 
-  argument('-C', '--config', dest='config', metavar='filename',
+  argument('-C', '--config', dest='config',
+           metavar='filename',
            help='use existing server.cfg file')
 
   argument('-D', '--debug', dest='debug',
@@ -104,6 +106,10 @@ def parse_options(args):
   argument('--incar-rate', dest='incar_rate',
            metavar='ms',
            help='set player data update rate while in a vehicle')
+
+  argument('--lagcompmode', dest='lagcompmode',
+           metavar='mode', type=int, choices=[0, 1, 2], default=0,
+           help='set lag compensation mode')
 
   argument('-l', '--lanmode', dest='lanmode',
            action='store_const', const=1, default=0,
