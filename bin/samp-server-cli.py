@@ -144,11 +144,11 @@ def parse_options(args):
 
   argument('--no-launch', dest='no_launch',
            action='store_true', default=False,
-           help='don\'t launch the server, just write server.cfg')
+           help='don\'t start the server, just write server.cfg')
 
   argument('--no-config', dest='no_config',
            action='store_true', default=False,
-           help='don\'t write server.cfg, just launch the server')
+           help='don\'t write server.cfg, just start the server')
 
   argument('--onfoot-rate', dest='onfoot_rate',
            metavar='ms',
@@ -207,7 +207,7 @@ def parse_options(args):
 
   argument('-T', '--timeout', dest='timeout',
            metavar='sec', type=float,
-           help='limit server run time')
+           help='shut down after X seconds')
 
   argument('--weapon-rate', dest='weapon_rate',
            metavar='ms',
