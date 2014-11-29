@@ -76,11 +76,6 @@ def parse_options(args):
            nargs=argparse.REMAINDER,
            help='run server under debugger')
 
-  argument('-e', '--extra', dest='extra_settings',
-           nargs='+', metavar=('name', 'value'), action='append',
-           help='add an additional server.cfg setting; '
-                'multiple occurences of this option are allowed')
-
   argument('-f', '--filterscript', dest='filterscripts',
            metavar='name/path', action='append',
            help='add a filter script; '
@@ -225,6 +220,11 @@ def parse_options(args):
   argument('-w', '--workdir', dest='workdir',
            metavar='path',
            help='set working directory (server directory by default)')
+
+  argument('-x', '--extra', dest='extra_settings',
+           nargs='+', metavar=('name', 'value'), action='append',
+           help='add extra server.cfg setting, possibly unknown; '
+                'multiple occurences of this option are allowed')
 
   return vars(parser.parse_args(args))
 
