@@ -29,6 +29,7 @@ import itertools
 import os
 import platform
 import random
+import shutil
 import string
 import subprocess
 import sys
@@ -65,6 +66,9 @@ def parse_options(args):
            nargs='+', metavar=('cmd', 'args'),
            help='override server startup command (path to server executable '
                 'by default)')
+
+  argument('-C', '--config', dest='config', metavar='filename',
+           help='use existing server.cfg file')
 
   argument('-D', '--debug', dest='debug',
            nargs=argparse.REMAINDER,
@@ -335,10 +339,15 @@ def main(argv):
     elif is_windows():
       command = ['ollydbg'] + debug + command
 
+  config = options.pop('config')
+  if config is not None:
+    shutil.copy(os.path.join(workdir, config),
+                os.path.join(workdir, 'server.cfg'))
+
   no_config = options.pop('no_config')
   no_launch = options.pop('no_launch')
 
-  if not no_config:
+  if not no_config and not config:
     server_cfg = os.path.join(workdir, 'server.cfg')
     write_config(server_cfg, options)
 
