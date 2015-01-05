@@ -346,8 +346,22 @@ def main(argv):
 
   config = options.pop('config')
   if config is not None:
-    shutil.copy(os.path.join(workdir, convert_path(config, workdir)),
-                os.path.join(workdir, 'server.cfg'))
+    config_paths = [
+      os.path.join(workdir, 'configs', config),
+      os.path.join(workdir, 'configs', config + '.cfg'),
+      os.path.join(workdir, convert_path(config, workdir)),
+      os.path.join(workdir, convert_path(config, workdir) + '.cfg'),
+    ]
+    config_path = None
+    for path in config_paths:
+      if os.path.exists(path):
+        config_path = path
+        shutil.copy(path, os.path.join(workdir, 'server.cfg'))
+        break
+    if not config_path:
+      print('Could not find the config file. '
+            'Tried the follwoing paths:\n- %s' % '\n- '.join(config_paths))
+      sys.exit(1)
 
   no_config = options.pop('no_config')
   no_launch = options.pop('no_launch')
