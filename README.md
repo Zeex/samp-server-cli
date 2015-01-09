@@ -45,7 +45,7 @@ samp-server-cli -g grandlarc -d crashdetect -d streamer
 Adding non-standard server.cfg options:
 
 ```
-samp-server-cli -g grandlarc -d profiler -x profile_gamemode 1
+samp-server-cli -g grandlarc -d profiler -x some_option its_value
 ```
 
 Using existing server.cfg file:
