@@ -12,7 +12,7 @@ Installation
 4. Extract the contents to some folder, for example, `C:\samp-server\cli`.
 5. Set `SAMP_SERVER_ROOT` environment variable to your server's root
    directory, e.g. `C:\samp-server`.
-6. Add `C:\samp-server\cli\bin ` to your PATH (optional).
+6. Add `C:\samp-server\cli ` to your PATH (optional).
 
 Examples
 --------
