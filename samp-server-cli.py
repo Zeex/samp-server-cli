@@ -40,6 +40,22 @@ try:
 except ImportError:
   from itertools import zip_longest as izip_longest
 
+class Timer:
+  def __init__(self, timeout, callback):
+    self.callback = callback
+    self.timer = threading.Timer(timeout, self.on_timeout)
+    self.is_expired = False
+
+  def start(self):
+    self.timer.start()
+
+  def cancel(self):
+    self.timer.cancel()
+
+  def on_timeout(self):
+    self.is_expired = True
+    self.callback()
+
 def generate_password(size=10, chars=string.ascii_letters + string.digits):
   return ''.join(random.choice(chars) for x in range(size))
 
@@ -372,19 +388,21 @@ def main(argv):
 
   if not no_launch:
     os.chdir(workdir)
+    server = subprocess.Popen(command)
     try:
       timeout = options.pop('timeout')
-      server = subprocess.Popen(command)
-      if timeout is not None:
-        term_timer = threading.Timer(timeout, server.terminate)
-        term_timer.start()
+      if timeout is None:
         server.wait()
-        term_timer.cancel()
       else:
+        timeout_timer = Timer(timeout, server.terminate)
+        timeout_timer.start()
         server.wait()
-      sys.exit(server.returncode)
+        if timeout_timer.is_expired:
+          sys.exit(1)
+        else:
+          timeout_timer.cancel()
     except KeyboardInterrupt:
-      sys.exit(0)
+      pass
 
 if __name__ == '__main__':
   main(sys.argv)
