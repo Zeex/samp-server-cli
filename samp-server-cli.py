@@ -27,7 +27,6 @@
 import argparse
 import itertools
 import os
-import platform
 import random
 import shutil
 import string
@@ -39,6 +38,50 @@ try:
   from itertools import izip_longest
 except ImportError:
   from itertools import zip_longest as izip_longest
+
+SERVER_CFG_OPTIONS = [
+  'announce',
+  'bind',
+  'chatlogging',
+  'debug',
+  'filterscripts',
+  'gamemode0',
+  'gamemode1',
+  'gamemode2',
+  'gamemode3',
+  'gamemode4',
+  'gamemode5',
+  'gamemode6',
+  'gamemode7',
+  'gamemode8',
+  'gamemode9',
+  'gamemodetext',
+  'hostname',
+  'incar_rate',
+  'lagcompmode',
+  'lanmode',
+  'logqueries',
+  'logtimeformat',
+  'mapname',
+  'maxnpc',
+  'maxplayers',
+  'myriad',
+  'nosign',
+  'onfoot_rate',
+  'output',
+  'password',
+  'plugins',
+  'port',
+  'query',
+  'rcon',
+  'rcon_password',
+  'sleep',
+  'stream_distance',
+  'stream_rate',
+  'timestamp',
+  'weapon_rate',
+  'weburl',
+]
 
 class Timer:
   def __init__(self, timeout, callback):
@@ -56,353 +99,368 @@ class Timer:
     self.is_expired = True
     self.callback()
 
-def generate_password(size=10, chars=string.ascii_letters + string.digits):
-  return ''.join(random.choice(chars) for x in range(size))
+class Server:
+  def __init__(self, optons):
+    self.set_options(optons)
 
-def parse_options(args):
-  parser = argparse.ArgumentParser(
-    description='A command line interface to SA:MP server',
-    fromfile_prefix_chars='@',
-  )
+  def read_config(self, filename):
+    self.options = {}
+    with open(filename, 'r') as file:
+      for line in file.readlines():
+        try:
+          name, value = string.split(line.strip(), maxsplit=1)
+          self.options[name] = value
+        except ValueError:
+          name = line.strip()
+          if len(name) > 0:
+            self.options[name] = ''
 
-  argument = lambda *args, **kwargs: parser.add_argument(*args, **kwargs)
+  def write_config(self, filename):
+    with open(filename, 'w') as file:
+      cfg_optons = {
+        k:v for (k, v) in self.options.iteritems()
+          if k in SERVER_CFG_OPTIONS
+      }
+      for name, value in cfg_optons.items():
+        if value is not None:
+          if len(str(value)) > 0:
+            file.write('%s %s\n' % (name, value))
+          else:
+            file.write('%s\n' % name)
 
-  argument('-a', '--announce', dest='announce',
-           action='store_const', const=1, default=0,
-           help='announce to server masterlist')
+  def get_root_dir(self):
+    servdir = self.options.get('servdir')
+    if servdir is None:
+      servdir = os.environ.get('SAMP_SERVER_ROOT')
+      if servdir is None:
+        servdir = os.getcwd()
+    if not os.path.isabs(servdir):
+      servdir = os.path.abspath(self.get_root_dir())
+    return servdir
 
-  argument('-b', '--bind', dest='bind',
-           metavar='address',
-           help='bind to specific IP address')
+  def get_working_dir(self):
+    local = self.options.get('local')
+    if local:
+      workdir = os.getcwd()
+    else:
+      workdir = self.options.get('workdir')
+      if workdir is None:
+        workdir = self.get_root_dir()
+    return workdir
 
-  argument('--chatlogging', dest='chatlogging',
-           action='store_const', const=1, default=0,
-           help='enable logging of in-game chat')
-
-  argument('-c', '--command', dest='command',
-           nargs='+', metavar=('cmd', 'args'),
-           help='override server startup command (path to server executable '
-                'by default)')
-
-  argument('-C', '--config', dest='config',
-           metavar='filename',
-           help='use existing server.cfg file')
-
-  argument('-D', '--debug', dest='debug',
-           nargs=argparse.REMAINDER,
-           help='run server under debugger')
-
-  argument('-f', '--filterscript', dest='filterscripts',
-           metavar='name/path', action='append',
-           help='add a filter script; '
-                'multiple occurences of this option are allowed')
-
-  argument('-g', '-g0', '--gamemode', '--gamemode0', dest='gamemode0',
-           metavar='name/path', default='bare',
-           help='set startup game mode (mode #0)')
-
-  for i in range(1, 10):
-    argument('-g%d' % i, '--gamemode%d' % i, dest='gamemode%d' % i,
-             metavar='name/path',
-             help='set game mode #%d' % i)
-
-  argument('--gamemodetext', dest='gamemodetext',
-           metavar='"My Game Mode"',
-           help='set game mode text (shown in server browser)')
-
-  argument('-n', '--hostname', dest='hostname',
-           metavar='"My SA-MP server"',
-           help='set host name (shown in server browser)')
-
-  argument('--incar-rate', dest='incar_rate',
-           metavar='ms',
-           help='set player data update rate while in a vehicle')
-
-  argument('--lagcompmode', dest='lagcompmode',
-           metavar='mode', type=int, choices=[0, 1, 2], default=0,
-           help='set lag compensation mode')
-
-  argument('-l', '--lanmode', dest='lanmode',
-           action='store_const', const=1, default=0,
-           help='enable LAN mode')
-
-  argument('-L', '--local', dest='local',
-           action='store_true', default=False,
-           help='run in current directory (same as if you pass "--workdir .")')
-
-  argument('-Q', '--logqueries', dest='logqueries',
-           action='store_const', const=1, default=0,
-           help='enable logging of queries sent to the server')
-
-  argument('--logtimeformat', dest='logtimeformat',
-           metavar='format',
-           help='set log timestamp format')
-
-  argument('-m', '--mapname', dest='mapname',
-           metavar='name',
-           help='set map name (shown in server browser)')
-
-  argument('--maxnpc', dest='maxnpc', metavar='number',
-           type=int, default=0,
-           help='set max. number of NPCs (bots)')
-
-  argument('--maxplayers', dest='maxplayers',
-           metavar='number', type=int, default=500,
-           help='set max. number of players')
-
-  argument('--myriad', dest='myriad',
-           action='store_const', const=1, default=0,
-           help='??')
-
-  argument('--nosign', dest='nosign',
-           action='store_const', const=1, default=0,
-           help='??')
-
-  argument('--no-launch', dest='no_launch',
-           action='store_true', default=False,
-           help='don\'t start the server, just write server.cfg')
-
-  argument('--no-config', dest='no_config',
-           action='store_true', default=False,
-           help='don\'t write server.cfg, just start the server')
-
-  argument('--onfoot-rate', dest='onfoot_rate',
-           metavar='ms',
-           help='set player data update rate while walking/running')
-
-  argument('-o', '--output', dest='output',
-           action='store_const', const=1, default=0,
-           help='enable console output (Linux only)')
-
-  argument('-P', '--password', dest='password',
-           nargs='?', metavar='password', const=generate_password(),
-           help='set server password')
-
-  argument('-d', '--plugin', dest='plugins',
-           metavar='name/path', action='append',
-           help='add a plugin; '
-                'multiple occurences of this option are allowed')
-
-  argument('-p', '--port', dest='port',
-           metavar='number', type=int, default=7777,
-           help='set server listen port')
-
-  argument('-q', '--query', dest='query',
-           action='store_const', const=1, default=0,
-           help='allow querying server info from outside world (e.g. server '
-                'browser)')
-
-  argument('-r', '--rcon', dest='rcon',
-           action='store_const', const=1, default=0,
-           help='enable RCON (Remote CONsole)')
-
-  argument('-R', '--rcon-password', dest='rcon_password',
-           metavar='password',
-           help='set RCON password (implies --rcon)')
-
-  argument('-s', '--servdir', dest='servdir',
-           metavar='path',
-           help='set server\'s root directory (current directory by default); '
-                'not necesssary if you use -c')
-
-  argument('--sleep', dest='sleep',
-           metavar='ms',
-           help='set server sleep time')
-
-  argument('--stream-distance', dest='stream_distance',
-           metavar='float',
-           help='set stream distance')
-
-  argument('--stream-rate', dest='stream_rate',
-           metavar='ms',
-           help='set stream rate')
-
-  argument('-t', '--timestamp', dest='timestamp',
-           action='store_const', const=1, default=0,
-           help='enable timestamps in log')
-
-  argument('-T', '--timeout', dest='timeout',
-           metavar='sec', type=float,
-           help='shut down after X seconds')
-
-  argument('--weapon-rate', dest='weapon_rate',
-           metavar='ms',
-           help='set player data update rate while firing a weapon')
-
-  argument('-u', '--weburl', dest='weburl',
-           metavar='url',
-           help='set contact website URL')
-
-  argument('-w', '--workdir', dest='workdir',
-           metavar='path',
-           help='set working directory (server directory by default)')
-
-  argument('-x', '--extra', dest='extra_settings',
-           nargs='+', metavar=('name', 'value'), action='append',
-           help='add extra server.cfg setting, possibly unknown; '
-                'multiple occurences of this option are allowed')
-
-  return vars(parser.parse_args(args))
-
-def is_windows():
-  system = platform.system()
-  return system == 'Windows' or system.startswith('CYGWIN_NT')
-
-def is_linux():
-  system = platform.system()
-  return system == 'Linux'
-
-def read_config(filename):
-  options = {}
-  with open(filename, 'r') as file:
-    for line in file.readlines():
-      try:
-        name, value = string.split(line.strip(), maxsplit=1)
-        options[name] = value
-      except ValueError:
-        name = line.strip()
-        if len(name) > 0:
-          options[name] = ''
-  return options
-
-def write_config(filename, options):
-  with open(filename, 'w') as file:
-    for name, value in options.items():
-      if value is not None:
-        if len(str(value)) > 0:
-          file.write('%s %s\n' % (name, value))
+  def get_command(self):
+    cmd = self.options.get('command')
+    if cmd is None:
+      exe = os.environ.get('SAMP_SERVER')
+      if exe is None:
+        if os.name is 'nt':
+          exe = 'samp-server.exe'
         else:
-          file.write('%s\n' % name)
+          exe = 'samp03svr'
+      cmd = [os.path.join(self.get_root_dir(), exe)]
+    return cmd
+
+  def get_debugger_command(self):
+    debug_cmd = self.options.get('debug')
+    if debug_cmd is not None:
+      if os.name is 'nt':
+        debug_cmd = ['ollydbg'] + debug + self.get_command()
+      else:
+        debug_cmd= ['gdb'] + debug + ['--args'] + self.get_command()
+    return debug_cmd
+
+  def set_options(self, options):
+    self.options = dict(options)
+
+    extra_settings = self.options.get('extra_settings')
+    if extra_settings is not None:
+      for s in extra_settings:
+        head, tail = s[0], s[1:]
+        self.options[head] = ' '.join(tail)
+
+    rcon_password = self.options.get('rcon_password')
+    if rcon_password is not None:
+      self.options['rcon'] = 1
+    else:
+      self.options['rcon_password'] = generate_password()
+
+    plugins = self.options.get('plugins')
+    if plugins is not None:
+      if os.name is 'nt':
+        plugin_extension = '.dll'
+      else:
+        plugin_extension = '.so'
+      for i, p in enumerate(plugins):
+        if not p.lower().endswith(plugin_extension):
+          plugins[i] += plugin_extension
+
+    dirs = { 'filterscripts': 'filterscripts',
+             'plugins':       'plugins',
+           }
+    for i in range(0, 10):
+      dirs['gamemode%d' % i] = 'gamemodes'
+
+    for name, dir in dirs.items():
+      dir = os.path.join(self.get_working_dir(), dir)
+      values = self.options[name]
+      if values is None:
+        continue
+      if not type(values) is list:
+        values = [values]
+      if values is not None:
+        for i, v in enumerate(values):
+          values[i] = convert_path(v, dir)
+        self.options[name] = '%s' % ' '.join(values)
+
+  def create_dirs(self):
+    workdir = self.get_working_dir()
+    if not os.path.exists(workdir):
+      os.mkdir(workdir)
+
+    for dir in ['filterscripts', 'gamemodes', 'plugins']:
+      real_dir = os.path.join(self.get_working_dir(), dir)
+      if not os.path.exists(real_dir):
+        os.mkdir(real_dir)
+
+  def create_config(self):
+    no_config = self.options.get('no_config')
+    if not no_config:
+      config = config = self.options.get('config')
+      if not config:
+        server_cfg = os.path.join(self.get_working_dir(), 'server.cfg')
+        self.write_config(server_cfg)
+      else:
+        workdir = server.get_working_dir()
+        config_paths = [
+          os.path.join(workdir, 'configs', config),
+          os.path.join(workdir, 'configs', config + '.cfg'),
+          os.path.join(workdir, convert_path(config, workdir)),
+          os.path.join(workdir, convert_path(config, workdir) + '.cfg'),
+        ]
+        config_path = None
+        for path in config_paths:
+          if os.path.exists(path):
+            config_path = path
+            shutil.copy(path, os.path.join(workdir, 'server.cfg'))
+            break
+        if not config_path:
+          raise Exception(
+            'Could not find the config file. '
+            'Tried the follwoing paths:\n- %s' % '\n- '.join(config_paths))
+
+  def run(self):
+    if not self.options.get('no_launch'):
+      os.chdir(self.get_working_dir())
+      process = subprocess.Popen(self.get_command())
+      timeout = self.options.get('timeout')
+      if timeout is None:
+        process.wait()
+      else:
+        timeout_timer = Timer(timeout, process.terminate)
+        timeout_timer.start()
+        process.wait()
+        if timeout_timer.is_expired:
+          return 1
+        else:
+          timeout_timer.cancel()
+    return 0
+
+def generate_password(size=10,
+                      chars=string.ascii_letters + string.digits):
+  return ''.join(random.choice(chars) for x in range(size))
 
 def convert_path(path, dir):
   if os.path.isabs(path) or path.startswith('.'):
     return os.path.relpath(path, dir)
   return path
 
+def parse_options(args):
+  parser = argparse.ArgumentParser(
+    description='A command line interface to SA:MP server',
+    fromfile_prefix_chars='@')
+
+  parser.add_argument('-a', '--announce', dest='announce',
+    action='store_const', const=1, default=0,
+    help='announce to server masterlist')
+
+  parser.add_argument('-b', '--bind', dest='bind',
+    metavar='address',
+    help='bind to specific IP address')
+
+  parser.add_argument('--chatlogging', dest='chatlogging',
+    action='store_const', const=1, default=0,
+    help='enable logging of in-game chat')
+
+  parser.add_argument('-c', '--command', dest='command',
+    nargs='+', metavar=('cmd', 'args'),
+    help='override server startup command (path to server executable '
+         'by default)')
+
+  parser.add_argument('-C', '--config', dest='config',
+    metavar='filename',
+    help='use existing server.cfg file')
+
+  parser.add_argument('-D', '--debug', dest='debug',
+    nargs=argparse.REMAINDER,
+    help='run server under debugger')
+
+  parser.add_argument('-f', '--filterscript', dest='filterscripts',
+    metavar='name/path', action='append',
+    help='add a filter script; multiple occurences of this option are allowed')
+
+  parser.add_argument('-g', '-g0', '--gamemode', '--gamemode0', dest='gamemode0',
+    metavar='name/path', default='bare',
+    help='set startup game mode (mode #0)')
+
+  for i in range(1, 10):
+    parser.add_argument('-g%d' % i, '--gamemode%d' % i, dest='gamemode%d' % i,
+      metavar='name/path',
+      help='set game mode #%d' % i)
+
+  parser.add_argument('--gamemodetext', dest='gamemodetext',
+    metavar='"My Game Mode"',
+    help='set game mode text (shown in server browser)')
+
+  parser.add_argument('-n', '--hostname', dest='hostname',
+    metavar='"My SA-MP server"',
+    help='set host name (shown in server browser)')
+
+  parser.add_argument('--incar-rate', dest='incar_rate',
+    metavar='ms',
+    help='set player data update rate while in a vehicle')
+
+  parser.add_argument('--lagcompmode', dest='lagcompmode',
+    metavar='mode', type=int, choices=[0, 1, 2], default=0,
+    help='set lag compensation mode')
+
+  parser.add_argument('-l', '--lanmode', dest='lanmode',
+    action='store_const', const=1, default=0,
+    help='enable LAN mode')
+
+  parser.add_argument('-L', '--local', dest='local',
+    action='store_true', default=False,
+    help='run in current directory (same as if you pass "--workdir .")')
+
+  parser.add_argument('-Q', '--logqueries', dest='logqueries',
+    action='store_const', const=1, default=0,
+    help='enable logging of queries sent to the server')
+
+  parser.add_argument('--logtimeformat', dest='logtimeformat',
+    metavar='format',
+    help='set log timestamp format')
+
+  parser.add_argument('-m', '--mapname', dest='mapname',
+    metavar='name',
+    help='set map name (shown in server browser)')
+
+  parser.add_argument('--maxnpc', dest='maxnpc', metavar='number',
+    type=int, default=0,
+    help='set max. number of NPCs (bots)')
+
+  parser.add_argument('--maxplayers', dest='maxplayers',
+    metavar='number', type=int, default=500,
+    help='set max. number of players')
+
+  parser.add_argument('--myriad', dest='myriad',
+    action='store_const', const=1, default=0,
+    help='??')
+
+  parser.add_argument('--nosign', dest='nosign',
+    action='store_const', const=1, default=0,
+    help='??')
+
+  parser.add_argument('--no-launch', dest='no_launch',
+    action='store_true', default=False,
+    help='don\'t start the server, just write server.cfg')
+
+  parser.add_argument('--no-config', dest='no_config',
+    action='store_true', default=False,
+    help='don\'t write server.cfg, just start the server')
+
+  parser.add_argument('--onfoot-rate', dest='onfoot_rate',
+    metavar='ms',
+    help='set player data update rate while walking/running')
+
+  parser.add_argument('-o', '--output', dest='output',
+    action='store_const', const=1, default=0,
+    help='enable console output (Linux only)')
+
+  parser.add_argument('-P', '--password', dest='password',
+    nargs='?', metavar='password', const=generate_password(),
+    help='set server password')
+
+  parser.add_argument('-d', '--plugin', dest='plugins',
+    metavar='name/path', action='append',
+    help='add a plugin; multiple occurences of this option are allowed')
+
+  parser.add_argument('-p', '--port', dest='port',
+    metavar='number', type=int, default=7777,
+    help='set server listen port')
+
+  parser.add_argument('-q', '--query', dest='query',
+    action='store_const', const=1, default=0,
+    help='allow querying server info from outside world (e.g. server browser)')
+
+  parser.add_argument('-r', '--rcon', dest='rcon',
+    action='store_const', const=1, default=0,
+    help='enable RCON (Remote CONsole)')
+
+  parser.add_argument('-R', '--rcon-password', dest='rcon_password',
+    metavar='password',
+    help='set RCON password (implies --rcon)')
+
+  parser.add_argument('-s', '--servdir', dest='servdir',
+    metavar='path',
+    help='set server\'s root directory (current directory by default); '
+         'not necesssary if you use -c')
+
+  parser.add_argument('--sleep', dest='sleep',
+    metavar='ms',
+    help='set server sleep time')
+
+  parser.add_argument('--stream-distance', dest='stream_distance',
+    metavar='float',
+    help='set stream distance')
+
+  parser.add_argument('--stream-rate', dest='stream_rate',
+      metavar='ms',
+      help='set stream rate')
+
+  parser.add_argument('-t', '--timestamp', dest='timestamp',
+    action='store_const', const=1, default=0,
+    help='enable timestamps in log')
+
+  parser.add_argument('-T', '--timeout', dest='timeout',
+    metavar='sec', type=float,
+    help='shut down after X seconds')
+
+  parser.add_argument('--weapon-rate', dest='weapon_rate',
+    metavar='ms',
+    help='set player data update rate while firing a weapon')
+
+  parser.add_argument('-u', '--weburl', dest='weburl',
+    metavar='url',
+    help='set contact website URL')
+
+  parser.add_argument('-w', '--workdir', dest='workdir',
+    metavar='path',
+    help='set working directory (server directory by default)')
+
+  parser.add_argument('-x', '--extra', dest='extra_settings',
+    nargs='+', metavar=('name', 'value'), action='append',
+    help='add extra server.cfg setting, possibly unknown; '
+         'multiple occurences of this option are allowed')
+
+  return vars(parser.parse_args(args))
+
 def main(argv):
-  options = parse_options(argv[1:])
-
-  servdir = options.pop('servdir')
-  if servdir is None:
-    servdir = os.environ.get('SAMP_SERVER_ROOT')
-    if servdir is None:
-      servdir = os.getcwd()
-  if not os.path.isabs(servdir):
-    servdir = os.path.abspath(servdir)
-
-  local = options.pop('local')
-  if local:
-    workdir = os.getcwd()
-  else:
-    workdir = options.pop('workdir')
-    if workdir is None:
-      workdir = servdir
-    else:
-      if not os.path.exists(workdir):
-        os.mkdir(workdir)
-
-  command = options.pop('command')
-  if command is None:
-    exe = os.environ.get('SAMP_SERVER')
-    if exe is None:
-      if is_windows():
-        exe = 'samp-server.exe'
-      else:
-        exe = 'samp03svr'
-    command = [os.path.join(servdir, exe)]
-
-  extra_settings = options.pop('extra_settings')
-  if extra_settings is not None:
-    for s in extra_settings:
-      head, tail = s[0], s[1:]
-      options[head] = ' '.join(tail)
-
-  rcon_password = options['rcon_password']
-  if rcon_password is not None:
-    options['rcon'] = 1
-  else:
-    options['rcon_password'] = generate_password()
-
-  plugins = options['plugins']
-  if plugins is not None:
-    if is_windows():
-      ext = '.dll'
-    else:
-      ext = '.so'
-    for i, p in enumerate(plugins):
-      if not p.lower().endswith(ext):
-        plugins[i] += ext
-
-  dirs = { 'filterscripts': 'filterscripts',
-           'plugins':       'plugins',
-         }
-  for i in range(0, 10):
-    dirs['gamemode%d' % i] = 'gamemodes'
-
-  for name, dir in dirs.items():
-    dir = os.path.join(workdir, dir)
-    if not os.path.exists(dir):
-      os.mkdir(dir)
-    values = options[name]
-    if values is None:
-      continue
-    if not type(values) is list:
-      values = [values]
-    if values is not None:
-      for i, v in enumerate(values):
-        values[i] = convert_path(v, dir)
-      options[name] = '%s' % ' '.join(values)
-
-  debug = options.pop('debug')
-  if debug is not None:
-    if is_linux():
-      command = ['gdb'] + debug + ['--args'] + command
-    elif is_windows():
-      command = ['ollydbg'] + debug + command
-
-  config = options.pop('config')
-  if config is not None:
-    config_paths = [
-      os.path.join(workdir, 'configs', config),
-      os.path.join(workdir, 'configs', config + '.cfg'),
-      os.path.join(workdir, convert_path(config, workdir)),
-      os.path.join(workdir, convert_path(config, workdir) + '.cfg'),
-    ]
-    config_path = None
-    for path in config_paths:
-      if os.path.exists(path):
-        config_path = path
-        shutil.copy(path, os.path.join(workdir, 'server.cfg'))
-        break
-    if not config_path:
-      print('Could not find the config file. '
-            'Tried the follwoing paths:\n- %s' % '\n- '.join(config_paths))
-      sys.exit(1)
-
-  no_config = options.pop('no_config')
-  no_launch = options.pop('no_launch')
-
-  if not no_config and not config:
-    server_cfg = os.path.join(workdir, 'server.cfg')
-    write_config(server_cfg, options)
-
-  if not no_launch:
-    os.chdir(workdir)
-    server = subprocess.Popen(command)
-    try:
-      timeout = options.pop('timeout')
-      if timeout is None:
-        server.wait()
-      else:
-        timeout_timer = Timer(timeout, server.terminate)
-        timeout_timer.start()
-        server.wait()
-        if timeout_timer.is_expired:
-          sys.exit(1)
-        else:
-          timeout_timer.cancel()
-    except KeyboardInterrupt:
-      pass
+  try:
+    server = Server(parse_options(argv[1:]))
+    server.create_dirs()
+    server.create_config()
+    return server.run()
+  except KeyboardInterrupt:
+    return 0
 
 if __name__ == '__main__':
-  main(sys.argv)
+  sys.exit(main(sys.argv))
