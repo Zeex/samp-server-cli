@@ -220,11 +220,7 @@ class Server:
         self.options[name] = '%s' % ' '.join(values)
 
   def create_dirs(self):
-    workdir = self.get_working_dir()
-    if not os.path.exists(workdir):
-      os.mkdir(workdir)
-
-    for dir in ['filterscripts', 'gamemodes', 'plugins']:
+    for dir in ['', 'filterscripts', 'gamemodes', 'plugins']:
       real_dir = os.path.join(self.get_working_dir(), dir)
       if not os.path.exists(real_dir):
         os.mkdir(real_dir)
