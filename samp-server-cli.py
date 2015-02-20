@@ -151,13 +151,20 @@ class Server:
   def get_server_command(self):
     command = self.options.get('command')
     if command is None:
-      executable = os.environ.get('SAMP_SERVER')
-      if not executable:
+      exe = os.environ.get('SAMP_SERVER')
+      if not exe:
         if os.name is 'nt':
-          executable = 'samp-server.exe'
+          exe = 'samp-server.exe'
         else:
-          executable = 'samp03svr'
-      command = [os.path.join(self.get_server_dir(), executable)]
+          exe = 'samp03svr'
+      exe_paths = [
+        os.path.join(self.get_server_dir(), exe),
+        os.path.join(os.path.dirname(os.path.realpath(__file__)), exe)
+      ]
+      for path in exe_paths:
+        if os.path.exists(path):
+          command = [path]
+          break
     return command
 
   def get_command(self):
@@ -250,19 +257,22 @@ class Server:
 
   def run(self):
     if not self.options.get('no_launch'):
-      os.chdir(self.get_working_dir())
-      process = subprocess.Popen(self.get_command())
-      timeout = self.options.get('timeout')
-      if timeout is None:
+      command = self.get_command()
+      if command is not None:
+        os.chdir(self.get_working_dir())
+        process = subprocess.Popen(command)
+        timeout = self.options.get('timeout')
+        if timeout is not None:
+          timeout_timer = Timer(timeout, process.terminate)
+          timeout_timer.start()
         process.wait()
+        if timeout is not None:
+          if timeout_timer.is_expired:
+            return 1
+          else:
+            timeout_timer.cancel()
       else:
-        timeout_timer = Timer(timeout, process.terminate)
-        timeout_timer.start()
-        process.wait()
-        if timeout_timer.is_expired:
-          return 1
-        else:
-          timeout_timer.cancel()
+        raise Exception('Could not find SA-MP server')
     return 0
 
 def generate_password(size=10,
