@@ -9,10 +9,11 @@ Installation
 1. Install Python and it to PATH.
 2. Go to https://github.com/Zeex/samp-server-cli.
 3. Click "Download ZIP".
-4. Extract the contents to some folder, for example, `C:\samp-server\cli`.
-5. Set `SAMP_SERVER_ROOT` environment variable to your server's root
-   directory, e.g. `C:\samp-server`.
-6. Add `C:\samp-server\cli ` to your PATH (optional).
+4. Extract the contents to some folder, e.g. `C:\samp-server\cli`.
+5. Set the `SAMP_SERVER_ROOT` environment variable to the full
+   path to your server's root directory, e.g. `C:\samp-server`.
+6. Optional: Add the directory where you extracted the scripts
+   to your PATH.
 
 Examples
 --------
