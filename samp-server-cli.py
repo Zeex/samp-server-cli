@@ -128,14 +128,14 @@ class Server:
           else:
             file.write('%s\n' % name)
 
-  def get_root_dir(self):
+  def get_server_dir(self):
     servdir = self.options.get('servdir')
     if servdir is None:
       servdir = os.environ.get('SAMP_SERVER_ROOT')
       if servdir is None:
         servdir = os.getcwd()
     if not os.path.isabs(servdir):
-      servdir = os.path.abspath(self.get_root_dir())
+      servdir = os.path.abspath(self.get_server_dir())
     return servdir
 
   def get_working_dir(self):
@@ -145,29 +145,29 @@ class Server:
     else:
       workdir = self.options.get('workdir')
       if workdir is None:
-        workdir = self.get_root_dir()
+        workdir = self.get_server_dir()
     return workdir
 
-  def get_command(self):
-    cmd = self.options.get('command')
-    if cmd is None:
-      exe = os.environ.get('SAMP_SERVER')
-      if exe is None:
+  def get_server_command(self):
+    command = self.options.get('command')
+    if command is None:
+      executable = os.environ.get('SAMP_SERVER')
+      if executable is None:
         if os.name is 'nt':
-          exe = 'samp-server.exe'
+          executable = 'samp-server.exe'
         else:
-          exe = 'samp03svr'
-      cmd = [os.path.join(self.get_root_dir(), exe)]
-    return cmd
+          executable = 'samp03svr'
+      command = [os.path.join(self.get_server_dir(), executable)]
+    return command
 
-  def get_debugger_command(self):
-    debug_cmd = self.options.get('debug')
-    if debug_cmd is not None:
-      if os.name is 'nt':
-        debug_cmd = ['ollydbg'] + debug + self.get_command()
-      else:
-        debug_cmd= ['gdb'] + debug + ['--args'] + self.get_command()
-    return debug_cmd
+  def get_command(self):
+    debug = self.options.get('debug')
+    if debug is None:
+      return self.get_server_command()
+    if os.name is 'nt':
+      return ['ollydbg'] + debug + self.get_server_command()
+    else:
+      return ['gdb'] + debug + ['--args'] + self.get_server_command()
 
   def set_options(self, options):
     self.options = dict(options)
