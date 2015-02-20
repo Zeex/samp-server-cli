@@ -135,7 +135,7 @@ class Server:
       if servdir is None:
         servdir = os.getcwd()
     if not os.path.isabs(servdir):
-      servdir = os.path.abspath(self.get_server_dir())
+      servdir = os.path.abspath(servdir)
     return servdir
 
   def get_working_dir(self):
