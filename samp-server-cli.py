@@ -118,7 +118,7 @@ class Server:
   def write_config(self, filename):
     with open(filename, 'w') as file:
       cfg_optons = {
-        k:v for (k, v) in self.options.iteritems()
+        k:v for (k, v) in self.options.items()
           if k in SERVER_CFG_OPTIONS
       }
       for name, value in cfg_optons.items():
