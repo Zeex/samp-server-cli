@@ -6,14 +6,13 @@ very convenient if you constantly change server settings, e.g. during testing.
 Installation
 ------------
 
-1. Install Python and it to PATH.
-2. Go to https://github.com/Zeex/samp-server-cli.
-3. Click "Download ZIP".
-4. Extract the contents to some folder, e.g. `C:\samp-server\cli`.
-5. Set the `SAMP_SERVER_ROOT` environment variable to the full
-   path to your server's root directory, e.g. `C:\samp-server`.
-6. Optional: Add the directory where you extracted the scripts
-   to your PATH.
+1. Install Python and it to PATH
+2. Go to https://github.com/Zeex/samp-server-cli
+3. Click "Download ZIP"
+4. Extract samp-server-cli.py and batch/shell scripts somewhere:
+   * Quick and easy: Extract to your server directory
+   * Advanced: Extract anywhere and set the `SAMP_SERVER_ROOT` variable
+5. Optional: Add samp-server-cli's directory to your PATH
 
 Examples
 --------
