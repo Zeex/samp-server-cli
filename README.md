@@ -27,7 +27,7 @@ Running a publicly accessible server with maxplayers 10 and RCON
 password "test":
 
 ```
-samp-server-cli -g grandlarc -q -R test --maxplayers 10
+samp-server-cli -g grandlarc -q -R test -M 10
 ```
 
 Using filterscripts:

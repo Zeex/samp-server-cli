@@ -353,11 +353,11 @@ def parse_options(args):
     metavar='name',
     help='set map name (shown in server browser)')
 
-  parser.add_argument('--maxnpc', dest='maxnpc', metavar='number',
-    type=int, default=0,
+  parser.add_argument('-N', '--maxnpc', dest='maxnpc',
+    metavar='number', type=int, default=0,
     help='set max. number of NPCs (bots)')
 
-  parser.add_argument('--maxplayers', dest='maxplayers',
+  parser.add_argument('-M', '--maxplayers', dest='maxplayers',
     metavar='number', type=int, default=500,
     help='set max. number of players')
 
