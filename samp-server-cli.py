@@ -152,7 +152,7 @@ class Server:
     command = self.options.get('command')
     if command is None:
       executable = os.environ.get('SAMP_SERVER')
-      if executable is None:
+      if not executable:
         if os.name is 'nt':
           executable = 'samp-server.exe'
         else:
