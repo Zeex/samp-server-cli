@@ -219,21 +219,27 @@ class Server:
           values[i] = convert_path(v, dir)
         self.options[name] = '%s' % ' '.join(values)
 
-  def create_dirs(self):
+  def run(self):
+    if self.options.get('no_launch'):
+      return 0
+
+    command = self.get_command()
+    if not command:
+      raise Exception('Could not find SA-MP server')
+
+    workdir = self.get_working_dir()
+
     for dir in ['', 'filterscripts', 'gamemodes', 'plugins']:
-      real_dir = os.path.join(self.get_working_dir(), dir)
+      real_dir = os.path.join(workdir, dir)
       if not os.path.exists(real_dir):
         os.mkdir(real_dir)
 
-  def create_config(self):
-    no_config = self.options.get('no_config')
-    if not no_config:
+    if not self.options.get('no_config'):
       config = config = self.options.get('config')
       if not config:
         server_cfg = os.path.join(self.get_working_dir(), 'server.cfg')
         self.write_config(server_cfg)
       else:
-        workdir = server.get_working_dir()
         config_paths = [
           os.path.join(workdir, 'configs', config),
           os.path.join(workdir, 'configs', config + '.cfg'),
@@ -251,24 +257,20 @@ class Server:
             'Could not find the config file. '
             'Tried the follwoing paths:\n- %s' % '\n- '.join(config_paths))
 
-  def run(self):
-    if not self.options.get('no_launch'):
-      command = self.get_command()
-      if command is not None:
-        os.chdir(self.get_working_dir())
-        process = subprocess.Popen(command)
-        timeout = self.options.get('timeout')
-        if timeout is not None:
-          timeout_timer = Timer(timeout, process.terminate)
-          timeout_timer.start()
-        process.wait()
-        if timeout is not None:
-          if timeout_timer.is_expired:
-            return 1
-          else:
-            timeout_timer.cancel()
+    os.chdir(workdir)
+    process = subprocess.Popen(command)
+
+    timeout = self.options.get('timeout')
+    if not timeout:
+      process.wait()
+    else:
+      timeout_timer = Timer(timeout, process.terminate)
+      timeout_timer.start()
+      process.wait()
+      if timeout_timer.is_expired:
+        return 1
       else:
-        raise Exception('Could not find SA-MP server')
+        timeout_timer.cancel()
     return 0
 
 def generate_password(size=10,
@@ -462,11 +464,9 @@ def parse_options(args):
 def main(argv):
   try:
     server = Server(parse_options(argv[1:]))
-    server.create_dirs()
-    server.create_config()
     return server.run()
   except KeyboardInterrupt:
-    return 0
+    pass
 
 if __name__ == '__main__':
   sys.exit(main(sys.argv))
