@@ -212,7 +212,7 @@ class Server:
       values = self.options[name]
       if values is None:
         continue
-      if not type(values) is list:
+      if type(values) is not list:
         values = [values]
       if values is not None:
         for i, v in enumerate(values):
@@ -224,10 +224,10 @@ class Server:
       return 0
 
     command = self.get_command()
-    if not command:
-      raise Exception('Could not find SA-MP server')
-
     workdir = self.get_working_dir()
+
+    if command is None:
+      raise Exception('Could not find SA-MP server')
 
     for dir in ['', 'filterscripts', 'gamemodes', 'plugins']:
       real_dir = os.path.join(workdir, dir)
@@ -235,9 +235,9 @@ class Server:
         os.mkdir(real_dir)
 
     if not self.options.get('no_config'):
-      config = config = self.options.get('config')
-      if not config:
-        server_cfg = os.path.join(self.get_working_dir(), 'server.cfg')
+      config = self.options.get('config')
+      if config is None:
+        server_cfg = os.path.join(workdir, 'server.cfg')
         self.write_config(server_cfg)
       else:
         config_paths = [
@@ -252,7 +252,7 @@ class Server:
             config_path = path
             shutil.copy(path, os.path.join(workdir, 'server.cfg'))
             break
-        if not config_path:
+        if config_path is None:
           raise Exception(
             'Could not find the config file. '
             'Tried the follwoing paths:\n- %s' % '\n- '.join(config_paths))
