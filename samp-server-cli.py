@@ -103,6 +103,14 @@ class Server:
   def __init__(self, optons):
     self.set_options(optons)
 
+  def is_valid_option(self, name):
+    if name in SERVER_CFG_OPTIONS:
+      return True
+    extra_options = self.options.get('extra_options')
+    if extra_options is not None:
+      return name in dict(extra_options).keys()
+    return False
+
   def read_config(self, filename):
     self.options = {}
     with open(filename, 'r') as file:
@@ -119,7 +127,7 @@ class Server:
     with open(filename, 'w') as file:
       cfg_optons = {
         k:v for (k, v) in self.options.items()
-          if k in SERVER_CFG_OPTIONS
+          if self.is_valid_option(k)
       }
       for name, value in cfg_optons.items():
         if value is not None:
@@ -179,9 +187,9 @@ class Server:
   def set_options(self, options):
     self.options = dict(options)
 
-    extra_settings = self.options.get('extra_settings')
-    if extra_settings is not None:
-      for s in extra_settings:
+    extra_options = self.options.get('extra_options')
+    if extra_options is not None:
+      for s in extra_options:
         head, tail = s[0], s[1:]
         self.options[head] = ' '.join(tail)
 
@@ -454,7 +462,7 @@ def parse_options(args):
     metavar='path',
     help='set working directory (server directory by default)')
 
-  parser.add_argument('-x', '--extra', dest='extra_settings',
+  parser.add_argument('-x', dest='extra_options',
     nargs='+', metavar=('name', 'value'), action='append',
     help='add extra server.cfg setting, possibly unknown; '
          'multiple occurences of this option are allowed')
