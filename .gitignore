@@ -1,9 +1,3 @@
-*.swp
-
-gamemodes
-filterscripts
-plugins
-scriptfiles
-crashinfo.txt
-server.cfg
-server_log.txt
+build
+dist
+MANIFEST
