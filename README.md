@@ -6,7 +6,7 @@ very convenient if you constantly change server settings, e.g. during testing.
 Installation
 ------------
 
-Use pip to install a stable version from Python package repository:
+Use pip to install a stable version from the Python Package Index:
 
 ```sh
 sudo pip intall samp-server-cli
@@ -18,12 +18,18 @@ or only for the current user:
 pip install --user samp-server-cli
 ```
 
+This will create a shell script in your `~/.local/bin` or `/usr/local/bin`
+directory on Linux and a .exe file in `C:\PythonXY\Scripts` on Windows.
+
 Alternatively, you can install samp-server-cli by running the accompanying
 setup script:
 
 ```sh
 python setup.py install
 ```
+
+Finally, you can just download this repository and run samp-server-cli out
+of the box using one of the wrapper scripts shipped with the source code.
 
 Examples
 --------
