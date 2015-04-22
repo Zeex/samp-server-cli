@@ -469,12 +469,12 @@ def parse_options(args):
 
   return vars(parser.parse_args(args))
 
-def main(argv):
+def main():
   try:
-    server = Server(parse_options(argv[1:]))
+    server = Server(parse_options(sys.argv[1:]))
     return server.run()
   except KeyboardInterrupt:
     pass
 
 if __name__ == '__main__':
-  sys.exit(main(sys.argv))
+  sys.exit(main())
