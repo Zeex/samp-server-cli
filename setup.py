@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
   name='samp-server-cli',
-  version='0.1.2',
+  version='0.1.3',
   author='Zeex',
   author_email='zeex@rocketmail.com',
   url='https://github.com/Zeex/samp-server-cli',
