@@ -1,0 +1,3 @@
+#!/bin/sh
+script=$(readlink -f $0)
+python "$(dirname $script)/samp_server_cli.py" $*
