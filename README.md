@@ -9,7 +9,7 @@ Installation
 Use pip to install a stable version from the Python Package Index:
 
 ```sh
-sudo pip intall samp-server-cli
+sudo pip install samp-server-cli
 ```
 
 or only for the current user:
