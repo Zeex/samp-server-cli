@@ -31,6 +31,23 @@ python setup.py install
 Finally, you can just download this repository and run samp-server-cli out
 of the box using one of the wrapper scripts shipped with the source code.
 
+Post-install configuration
+--------------------------
+
+One thing you may need to do after installing samp-server-cli is to set
+the `SAMP_SERVER_ROOT` environment variable to the absolute path to your
+server's root directory (where samp03svr or samp-server.exe sits). This
+is only needed if you install samp-server-cli in some non-default location.
+
+By default, server executables are searched in:
+
+* The current working directory
+* The directory in which samp-server-cli is located
+* The value of the `SAM_SERVER_ROOT` variable
+
+You can also specify the exact command to be run instead using `--coomand`,
+in which case the script will not attempt to find the server executable.
+
 Examples
 --------
 
