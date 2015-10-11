@@ -277,7 +277,7 @@ class Server:
         return 1
       else:
         timeout_timer.cancel()
-    return 0
+    return process.returncode
 
 def generate_password(size=10,
                       chars=string.ascii_letters + string.digits):
