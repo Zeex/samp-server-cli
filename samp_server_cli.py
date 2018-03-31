@@ -287,7 +287,7 @@ def generate_password(size=10,
 
 def convert_path(path, dir):
   if os.path.isabs(path) or path.startswith('.'):
-    return os.path.relpath(path, dir)
+    return os.path.relpath(os.path.realpath(path), dir)
   return path
 
 def parse_options(args):
