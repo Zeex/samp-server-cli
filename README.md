@@ -1,7 +1,34 @@
 
-This is a Python script that lets you easily run your server from the command
-line without ever touching server.cfg. I personally use it all the time - it's
-very convenient if you constantly change server settings, e.g. during testing.
+This is a shell script that lets you quickly start your SA-MP server from
+the command line without opening, editing, and saving `server.cfg` every
+time. It's usually useful during development.
+
+How to use it
+-------------
+
+You can define the root directory by setting `SAMP_SERVER_ROOT` (see below)
+and run the server from anywhere, which is convenient during development.
+If you're working on a plugin and want to test it, you just do:
+
+```
+samp-server-cli -d ./path/to/plugin.so
+```
+
+By default `samp-server-cli` uses the "bare" gamemode that ships with the 
+server (`gamemodes/bare.pwn`).
+
+If you are writing a small script that tests some code snippet:
+
+```
+samp-server-cli -g ./awesomescript.amx
+```
+
+(the `.amx` part should be omitted)
+
+When you use `./` in front of a file name passed to `-d`, `-g`, or `-f` it
+means that it's relative to the current working directory. When you don't,
+it means that the path is relative to the corresponding directory (`plugins`,
+`gamemodes`, and `filterscripts` respectively).
 
 Installation
 ------------
