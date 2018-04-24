@@ -7,20 +7,19 @@ How to use it
 -------------
 
 You can define the root directory by setting `SAMP_SERVER_ROOT` (see below)
-and run the server from anywhere, which is convenient during development.
-If you're working on a plugin and want to test it, you just do:
+and run the server from anywhere. If you're working on a plugin and want to
+test it, you just do:
 
 ```
 samp-server-cli -d ./path/to/plugin.so
 ```
 
-By default `samp-server-cli` uses the "bare" gamemode that ships with the 
-server (`gamemodes/bare.pwn`).
-
-If you are writing a small script that tests some code snippet:
+By default `samp-server-cli` uses the "bare" gamemode (`gamemodes/bare.pwn`).
+If you want to test some code snippet that you compiled to `somescript.amx`
+simply run:
 
 ```
-samp-server-cli -g ./awesomescript.amx
+samp-server-cli -g ./somescript
 ```
 
 (the `.amx` part should be omitted)
