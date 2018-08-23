@@ -1,7 +1,9 @@
 
 This is a shell script that lets you quickly start your SA-MP server from
-the command line without opening, editing, and saving `server.cfg` every
-time. It's usually useful during development.
+the command line without opening, editing, and saving server.cfg every
+time. It generates a new server.cfg based on specified command line arguments 
+and  starts the server. This can make it much easier to test various scripts 
+and plugins during development (I use it for testing plugins).
 
 How to use it
 -------------
