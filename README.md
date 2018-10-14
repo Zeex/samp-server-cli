@@ -9,6 +9,11 @@ the command line arguments you use and optionally starts the server. This can
 make it much easier to test various scripts and plugins during development 
 (for example, I use it for testing plugins).
 
+Requirements
+------------
+
+Python 2.7+ or Python 3.
+
 How to use it
 -------------
 
