@@ -4,16 +4,17 @@ samp-server-cli
 
 This is a small Python script that lets you quickly start your SA-MP server 
 from the command line without opening, editing, and saving server.cfg every
-time. It generates a new server.cfg based on specified command line arguments 
-and optionally starts the server. This can make it much easier to test various 
-scripts  and plugins during development (I use it for testing plugins).
+time you need to change some option. It generates a new server.cfg based on 
+the command line arguments you use and optionally starts the server. This can
+make it much easier to test various scripts and plugins during development 
+(for example, I use it for testing plugins).
 
 How to use it
 -------------
 
-You can define the root directory by setting `SAMP_SERVER_ROOT` (see below)
-and run the server from anywhere. If you're working on a plugin and want to
-test it, you just do:
+You can define the root directory of your SA-MP server installation by 
+setting `SAMP_SERVER_ROOT` (see below) and start it from anywhere. If you're
+working on a plugin and want to test it, you just do:
 
 ```
 samp-server-cli -d ./path/to/plugin.so
@@ -66,29 +67,30 @@ Post-install configuration
 --------------------------
 
 One thing you may need to do after installing samp-server-cli is to set
-the `SAMP_SERVER_ROOT` environment variable to the absolute path to your
-server's root directory (where samp03svr or samp-server.exe sits). This
-is only needed if you install samp-server-cli in some non-default location.
+the `SAMP_SERVER_ROOT` environment variable to the absolute path of your
+server's root directory (where samp03svr or samp-server.exe is located).
 
-By default, server executables are searched in:
+If you don't do it the script will seach for the server executable file 
+in the following locations:
 
 * The current working directory
 * The directory in which samp-server-cli is located
-* The value of the `SAM_SERVER_ROOT` variable
+* The value of the `SAMP_SERVER_ROOT` variable (if defined)
 
-You can also specify the exact command to be run instead using `--coomand`,
-in which case the script will not attempt to find the server executable.
+You can also specify the exact command to start the server using 
+`--command` in which case the script will not attempt to find the server
+executable.
 
 Examples
 --------
 
-Running a gamemode with default settings:
+How to run a gamemode with default settings:
 
 ```
 samp-server-cli -g grandlarc
 ```
 
-Running a publicly accessible server with maxplayers 10 and RCON
+How to run a publicly accessible server with maxplayers 10 and RCON
 password "test":
 
 ```
