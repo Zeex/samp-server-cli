@@ -14,8 +14,8 @@ Requirements
 
 Python 2.7+ or Python 3.
 
-How to use it
--------------
+Usage
+-----
 
 You can define the root directory of your SA-MP server installation by 
 setting `SAMP_SERVER_ROOT` (see below) and start it from anywhere. If you're
