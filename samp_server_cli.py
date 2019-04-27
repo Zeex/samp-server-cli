@@ -103,12 +103,14 @@ class Server:
   def __init__(self, optons):
     self.set_options(optons)
 
-  def is_valid_option(self, name):
+  def is_valid_config_option(self, name):
     if name in SERVER_CFG_OPTIONS:
       return True
     extra_options = self.options.get('extra_options')
     if extra_options is not None:
-      return name in dict(extra_options).keys()
+      for o in extra_options:
+        if name == o[0]:
+          return True
     return False
 
   def read_config(self, filename):
@@ -127,7 +129,7 @@ class Server:
     with open(filename, 'w') as file:
       cfg_optons = {
         k:v for (k, v) in self.options.items()
-          if self.is_valid_option(k)
+          if self.is_valid_config_option(k)
       }
       for name, value in cfg_optons.items():
         if value is not None:
@@ -189,8 +191,8 @@ class Server:
 
     extra_options = self.options.get('extra_options')
     if extra_options is not None:
-      for s in extra_options:
-        head, tail = s[0], s[1:]
+      for o in extra_options:
+        head, tail = o[0], o[1:]
         self.options[head] = ' '.join(tail)
 
     rcon_password = self.options.get('rcon_password')
@@ -464,7 +466,7 @@ def parse_options(args):
 
   parser.add_argument('-x', dest='extra_options',
     nargs='+', metavar=('name', 'value'), action='append',
-    help='add extra server.cfg setting, possibly unknown; '
+    help='add a custom server.cfg setting; '
          'multiple occurences of this option are allowed')
 
   return vars(parser.parse_args(args))
