@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# Copyright (c) 2012-2015 Zeex
+# Copyright (c) 2012-2019 Zeex
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
