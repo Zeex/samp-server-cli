@@ -163,7 +163,7 @@ class Server:
     if command is None:
       exe = os.environ.get('SAMP_SERVER')
       if not exe:
-        if os.name is 'nt':
+        if os.name == 'nt':
           exe = 'samp-server.exe'
         else:
           exe = 'samp03svr'
@@ -181,7 +181,7 @@ class Server:
     debug = self.options.get('debug')
     if debug is None:
       return self.get_server_command()
-    if os.name is 'nt':
+    if os.name == 'nt':
       return ['ollydbg'] + debug + self.get_server_command()
     else:
       return ['gdb'] + debug + ['--args'] + self.get_server_command()
@@ -203,7 +203,7 @@ class Server:
 
     plugins = self.options.get('plugins')
     if plugins is not None:
-      if os.name is 'nt':
+      if os.name == 'nt':
         plugin_extension = '.dll'
       else:
         plugin_extension = '.so'
